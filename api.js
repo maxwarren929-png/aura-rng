@@ -123,6 +123,31 @@ class ApiClient {
   async claimPendingAura(pendingId) {
     return this._req('DELETE', `/trades/pending/${pendingId}`);
   }
+
+  // Game state (server-authoritative)
+  async gameState() {
+    return this._req('GET', '/game/state');
+  }
+
+  async roll(count = 1) {
+    return this._req('POST', '/game/roll', { count });
+  }
+
+  async buy(itemId) {
+    return this._req('POST', '/game/buy', { itemId });
+  }
+
+  async sell(auraId, count = 1) {
+    return this._req('POST', '/game/sell', { auraId, count });
+  }
+
+  async equip(auraId) {
+    return this._req('POST', '/game/equip', { auraId });
+  }
+
+  async syncState(state) {
+    return this._req('POST', '/game/save', { state });
+  }
 }
 
 export const API = new ApiClient();

@@ -22,7 +22,7 @@
     <div id="hud-right">
       <div id="hud-coins">🪙 500</div>
       <div id="hud-sub">Lv1 · 0 rolls</div>
-      <button id="hud-auth-btn" onclick="UI.openAuthModal()">Login</button>
+      <button id="hud-auth-btn">●</button>
     </div>
   </div>
 
@@ -140,18 +140,42 @@
 <!-- Notifications -->
 <div id="notifs"></div>
 
-<!-- Auth Modal -->
-<div id="auth-overlay" onclick="if(event.target===this)UI.closeAuthModal()">
-  <div id="auth-modal">
-    <div id="auth-tabs">
-      <button class="auth-tab active" id="auth-tab-login" onclick="UI.authTab('login')">Login</button>
-      <button class="auth-tab" id="auth-tab-register" onclick="UI.authTab('register')">Register</button>
+<!-- Boot Overlay (covers everything until auth+load complete) -->
+<div id="boot-overlay">
+  <div id="boot-box">
+    <div class="boot-logo">✨ AURA RNG</div>
+
+    <!-- Connecting -->
+    <div id="boot-connecting" class="boot-phase">
+      <div class="boot-spinner"></div>
+      <div class="boot-sub">Connecting to server…</div>
     </div>
-    <div id="auth-error"></div>
-    <input id="auth-username" type="text" placeholder="Username" maxlength="20" autocomplete="username" />
-    <input id="auth-password" type="password" placeholder="Password" maxlength="60" autocomplete="current-password" />
-    <button id="auth-submit-btn" onclick="UI.submitAuth()">Login</button>
-    <button class="btn" style="width:100%;margin-top:6px;font-size:12px" onclick="UI.closeAuthModal()">Cancel</button>
+
+    <!-- Error -->
+    <div id="boot-error" class="boot-phase" style="display:none">
+      <div style="font-size:32px;margin-bottom:10px">⚠️</div>
+      <div style="color:#ff5555;font-weight:700;margin-bottom:6px">Could not reach server</div>
+      <div class="boot-sub" style="margin-bottom:16px">Retrying in 5 seconds…</div>
+      <button class="btn" onclick="UI.retryBoot()">Retry Now</button>
+    </div>
+
+    <!-- Auth -->
+    <div id="boot-auth" class="boot-phase" style="display:none">
+      <div id="boot-auth-tabs">
+        <button class="boot-tab-btn active" id="boot-tab-login" onclick="UI.bootAuthTab('login')">Login</button>
+        <button class="boot-tab-btn" id="boot-tab-register" onclick="UI.bootAuthTab('register')">Register</button>
+      </div>
+      <div id="boot-auth-error"></div>
+      <input id="boot-username" type="text" placeholder="Username" maxlength="20" autocomplete="username" />
+      <input id="boot-password" type="password" placeholder="Password" maxlength="60" autocomplete="current-password" />
+      <button id="boot-submit-btn" onclick="UI.bootSubmitAuth()">Login</button>
+    </div>
+
+    <!-- Loading -->
+    <div id="boot-loading" class="boot-phase" style="display:none">
+      <div class="boot-spinner"></div>
+      <div class="boot-sub">Loading your auras…</div>
+    </div>
   </div>
 </div>
 

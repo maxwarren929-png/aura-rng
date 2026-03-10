@@ -16,6 +16,7 @@ app.use('/api/auth',    require('./routes/auth'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/chat',    require('./routes/chat'));
 app.use('/api/trades',  require('./routes/trades'));
+app.use('/api/game',    require('./routes/game'));
 
 // Health check
 app.get('/api/health', (_req, res) => res.json({ ok: true }));

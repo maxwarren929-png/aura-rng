@@ -41,6 +41,12 @@ CREATE TABLE IF NOT EXISTS trades (
 
 CREATE INDEX IF NOT EXISTS trades_status_idx ON trades(status);
 
+CREATE TABLE IF NOT EXISTS game_saves (
+  player_id INTEGER PRIMARY KEY REFERENCES players(id) ON DELETE CASCADE,
+  state JSONB NOT NULL DEFAULT '{}',
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 CREATE TABLE IF NOT EXISTS pending_auras (
   id SERIAL PRIMARY KEY,
   to_player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,

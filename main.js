@@ -6,8 +6,6 @@ import { renderShop, renderCollection, renderMergeGrid, renderEnchant, renderQue
 import { ENCHANTMENT_BY_ID } from './enchantments.js';
 import { API } from './api.js';
 
-API.init();
-
 // ── Canvas setup ──────────────────────────────────────────────────────────────
 const canvas = document.getElementById('gc');
 const ctx = canvas.getContext('2d');
@@ -29,7 +27,6 @@ resize();
 
 // ── State ─────────────────────────────────────────────────────────────────────
 const gs = new GameState();
-gs.load();
 
 const particles = new ParticleSystem();
 const shake = new ScreenShake();
@@ -44,6 +41,7 @@ let t = 0;
 // ── Roll queue / animation ────────────────────────────────────────────────────
 let rollQueue = [];
 let rollAnimating = false;
+let rollPending = false;
 let rollAnim = null; // { aura, isNew, coins, xp, phase, timer, particles }
 let multiOverlay = [];
 let multiOverlayTimer = 0;
@@ -61,14 +59,99 @@ tabs.forEach(tab => {
 });
 
 function refreshScreen(tab) {
-  if (tab === 'shop') renderShop(document.getElementById('shop-list'), gs, () => { updateHUD(); renderShop(document.getElementById('shop-list'), gs, refreshScreen.bind(null,'shop')); });
-  if (tab === 'collection') renderCollection(document.getElementById('coll-grid'), gs, () => refreshScreen('collection'), () => { updateHUD(); refreshScreen('collection'); });
+  if (tab === 'shop') {
+    renderShop(document.getElementById('shop-list'), gs, () => {});
+    window._shopBuy = async (id) => {
+      try {
+        const data = await API.buy(id);
+        gs.fromDict(data.state);
+        flushNotifications(); updateHUD();
+        refreshScreen('shop');
+      } catch(e) { pushNotif(e.message, [255,80,80]); }
+    };
+  }
+  if (tab === 'collection') {
+    renderCollection(document.getElementById('coll-grid'), gs,
+      () => refreshScreen('collection'),
+      () => { updateHUD(); refreshScreen('collection'); }
+    );
+    window._collEquip = async (id) => {
+      try {
+        const data = await API.equip(id);
+        gs.fromDict(data.state);
+        pushNotif(`Equipped ${gs.getAura(id)?.name || id}!`, [255,215,0]);
+        refreshScreen('collection');
+      } catch(e) { pushNotif(e.message, [255,80,80]); }
+    };
+    window._collSell = async (id) => {
+      try {
+        const data = await API.sell(id, 1);
+        gs.fromDict(data.state);
+        pushNotif(`Sold for 🪙${data.earned}`, [255,215,0]);
+        updateHUD(); refreshScreen('collection');
+      } catch(e) { pushNotif(e.message, [255,80,80]); }
+    };
+    window._collSellAll = async (id) => {
+      const aura = gs.getAura(id);
+      const cnt = (gs.countOf(id) || 1) - 1;
+      if (!aura || cnt <= 0) return;
+      try {
+        const data = await API.sell(id, cnt);
+        gs.fromDict(data.state);
+        pushNotif(`Sold ×${cnt} for 🪙${data.earned.toLocaleString()}`, [255,215,0]);
+        updateHUD(); refreshScreen('collection');
+      } catch(e) { pushNotif(e.message, [255,80,80]); }
+    };
+  }
   if (tab === 'merge') { renderMergeGrid(document.getElementById('merge-grid'), gs, selectMergeAura); renderMergeSlots(); }
   if (tab === 'enchant') renderEnchant(document.getElementById('enc-list'), gs, () => { updateHUD(); refreshScreen('enchant'); });
   if (tab === 'quests') renderQuests(document.getElementById('quests-list'), gs);
   if (tab === 'stats') renderStats(document.getElementById('stats-content'), gs);
   if (tab === 'chat') loadChat();
   if (tab === 'trade') loadTrade();
+}
+
+// ── Boot screen ───────────────────────────────────────────────────────────────
+let _bootPhase = 'connecting';
+let _bootRetryTimer = null;
+let _bootAuthMode = 'login';
+
+function showBoot(phase) {
+  _bootPhase = phase;
+  document.getElementById('boot-overlay').classList.remove('hidden');
+  ['connecting','error','auth','loading'].forEach(p => {
+    const el = document.getElementById('boot-' + p);
+    if (el) el.style.display = p === phase ? 'flex' : 'none';
+  });
+}
+
+function hideBoot() {
+  document.getElementById('boot-overlay').classList.add('hidden');
+}
+
+async function boot() {
+  if (_bootRetryTimer) { clearTimeout(_bootRetryTimer); _bootRetryTimer = null; }
+  showBoot('connecting');
+  try {
+    await API._req('GET', '/health');
+  } catch {
+    showBoot('error');
+    _bootRetryTimer = setTimeout(() => boot(), 5000);
+    return;
+  }
+  API.init();
+  if (!API.loggedIn) { showBoot('auth'); return; }
+  showBoot('loading');
+  try {
+    const data = await API.gameState();
+    gs.fromDict(data.state);
+    hideBoot();
+    updateHUD();
+    pushNotif(`Welcome back, ${API.username}!`, [80, 255, 80]);
+  } catch {
+    API.logout();
+    showBoot('auth');
+  }
 }
 
 // ── HUD ───────────────────────────────────────────────────────────────────────
@@ -80,12 +163,16 @@ function updateHUD() {
     authBtn.textContent = API.username;
     authBtn.className = 'logged-in';
     authBtn.onclick = () => {
-      if (confirm(`Log out as ${API.username}?`)) { API.logout(); updateHUD(); }
+      if (confirm(`Log out as ${API.username}?`)) {
+        API.logout();
+        // Force re-auth via boot screen
+        location.reload();
+      }
     };
   } else {
     authBtn.textContent = 'Login';
     authBtn.className = '';
-    authBtn.onclick = () => UI.openAuthModal();
+    authBtn.onclick = () => boot();
   }
 }
 
@@ -107,29 +194,46 @@ function pushNotif(msg, color=[255,255,255]) {
 }
 
 // ── Rolling ───────────────────────────────────────────────────────────────────
-function requestRolls(count) {
-  if (rollAnimating) return;
-  const results = [];
-  for (let i = 0; i < count; i++) {
-    const aura = gs.pickAura();
-    results.push(gs.applyRollResult(aura));
+async function requestRolls(count) {
+  if (rollAnimating || rollPending) return;
+  rollPending = true;
+  try {
+    const data = await API.roll(count);
+    gs.fromDict(data.state);
+    // Push server-side notifications (level ups, quest completions, etc.)
+    for (const r of data.results) {
+      for (const n of (r.notifications || [])) pushNotif(n.msg, n.color);
+    }
+    flushNotifications();
+    updateHUD();
+
+    const results = data.results.map(r => ({
+      aura: AURA_BY_ID[r.auraId] || ALL_AURAS[0],
+      firstTime: r.firstTime,
+      coins: r.coins,
+      xp: r.xp,
+      isCrit: r.isCrit,
+    }));
+
+    if (count === 1) {
+      rollQueue.push(results[0]);
+      animateNext();
+    } else {
+      const best = results.reduce((a, b) => b.aura.rarity > a.aura.rarity ? b : a, results[0]);
+      rollQueue.push(best);
+      multiOverlay = results;
+      multiOverlayTimer = 0;
+      animateNext();
+    }
+    // Switch to roll tab
+    activeTab = 'game';
+    tabs.forEach(t2 => t2.classList.toggle('active', t2.dataset.tab === 'game'));
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === 'screen-game'));
+  } catch (err) {
+    pushNotif(`Roll failed: ${err.message}`, [255, 80, 80]);
+  } finally {
+    rollPending = false;
   }
-  flushNotifications();
-  updateHUD();
-  if (count === 1) {
-    rollQueue.push(results[0]);
-    animateNext();
-  } else {
-    const best = results.reduce((a,b) => b.aura.rarity > a.aura.rarity ? b : a, results[0]);
-    rollQueue.push(best);
-    multiOverlay = results;
-    multiOverlayTimer = 0;
-    animateNext();
-  }
-  // Switch to roll tab
-  activeTab = 'game';
-  tabs.forEach(t2 => t2.classList.toggle('active', t2.dataset.tab === 'game'));
-  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === 'screen-game'));
 }
 
 function animateNext() {
@@ -200,12 +304,7 @@ function renderMergeSlots() {
   }
 }
 
-// ── Auth modal ────────────────────────────────────────────────────────────────
-let _authMode = 'login';
-
-function showAuthOverlay(show) {
-  document.getElementById('auth-overlay').classList.toggle('open', show);
-}
+// (auth is handled via boot overlay)
 
 // ── Chat ──────────────────────────────────────────────────────────────────────
 let _chatMessages = [];
@@ -242,9 +341,9 @@ document.getElementById('chat-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') UI.sendChat();
 });
 
-// Enter key submits auth
-document.getElementById('auth-password').addEventListener('keydown', e => {
-  if (e.key === 'Enter') UI.submitAuth();
+// Enter key submits boot auth
+document.getElementById('boot-password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') UI.bootSubmitAuth();
 });
 
 // ── Trade ─────────────────────────────────────────────────────────────────────
@@ -272,12 +371,14 @@ async function loadTrade() {
       },
       async (id) => { // collect pending aura
         try {
-          const aura = await API.claimPendingAura(id);
-          gs.auras[aura.aura_id] = (gs.auras[aura.aura_id] || 0) + 1;
-          gs.save();
-          pushNotif(`Received ${aura.aura_name}! Added to collection.`, [80,255,80]);
+          const result = await API.claimPendingAura(id);
+          // Add to inventory via a server equip-style save
+          const auraId = result.aura_id;
+          gs.inventory[auraId] = (gs.inventory[auraId] || 0) + 1;
+          await API.syncState({ mergedDefs: gs.mergedDefs, mergedInventory: gs.mergedInventory, equippedId: gs.equippedId, auraEnchantments: gs.auraEnchantments });
+          pushNotif(`Received ${result.aura_name}! Added to collection.`, [80, 255, 80]);
           loadTrade();
-        } catch (e) { pushNotif(e.message, [255,80,80]); }
+        } catch (e) { pushNotif(e.message, [255, 80, 80]); }
       }
     );
   } catch (err) {
@@ -308,36 +409,38 @@ window.UI = {
     refreshScreen('enchant');
   },
 
-  // Auth
-  openAuthModal() { showAuthOverlay(true); document.getElementById('auth-error').textContent = ''; document.getElementById('auth-username').focus(); },
-  closeAuthModal() { showAuthOverlay(false); },
-  authTab(mode) {
-    _authMode = mode;
-    document.querySelectorAll('.auth-tab').forEach(b => b.classList.toggle('active', b.id === `auth-tab-${mode}`));
-    document.getElementById('auth-submit-btn').textContent = mode === 'login' ? 'Login' : 'Register';
-    document.getElementById('auth-error').textContent = '';
+  // Boot auth
+  retryBoot() { boot(); },
+  bootAuthTab(mode) {
+    _bootAuthMode = mode;
+    document.getElementById('boot-tab-login').classList.toggle('active', mode === 'login');
+    document.getElementById('boot-tab-register').classList.toggle('active', mode === 'register');
+    document.getElementById('boot-submit-btn').textContent = mode === 'login' ? 'Login' : 'Register';
+    document.getElementById('boot-auth-error').textContent = '';
   },
-  async submitAuth() {
-    const username = document.getElementById('auth-username').value.trim();
-    const password = document.getElementById('auth-password').value;
-    const errEl = document.getElementById('auth-error');
-    const btn = document.getElementById('auth-submit-btn');
+  async bootSubmitAuth() {
+    const username = document.getElementById('boot-username').value.trim();
+    const password = document.getElementById('boot-password').value;
+    const errEl = document.getElementById('boot-auth-error');
+    const btn = document.getElementById('boot-submit-btn');
     if (!username || !password) { errEl.textContent = 'Fill in both fields.'; return; }
     btn.disabled = true;
     btn.textContent = '…';
     try {
-      if (_authMode === 'login') await API.login(username, password);
+      if (_bootAuthMode === 'login') await API.login(username, password);
       else await API.register(username, password);
-      showAuthOverlay(false);
+      showBoot('loading');
+      const data = await API.gameState();
+      gs.fromDict(data.state);
+      hideBoot();
       updateHUD();
-      pushNotif(`Welcome, ${API.username}!`, [80,255,80]);
-      document.getElementById('auth-username').value = '';
-      document.getElementById('auth-password').value = '';
+      pushNotif(`Welcome, ${API.username}!`, [80, 255, 80]);
+      document.getElementById('boot-username').value = '';
+      document.getElementById('boot-password').value = '';
     } catch (err) {
       errEl.textContent = err.message;
-    } finally {
       btn.disabled = false;
-      btn.textContent = _authMode === 'login' ? 'Login' : 'Register';
+      btn.textContent = _bootAuthMode === 'login' ? 'Login' : 'Register';
     }
   },
 
@@ -948,7 +1051,14 @@ window.addEventListener('keydown', e => {
     activeTab = newTab;
     refreshScreen(newTab);
   }
-  if (e.code === 'F5') { e.preventDefault(); gs.save(); pushNotif('Game saved! 💾', [80,255,80]); }
+  if (e.code === 'F5') {
+    e.preventDefault();
+    if (API.loggedIn) {
+      API.syncState({ mergedDefs: gs.mergedDefs, mergedInventory: gs.mergedInventory, equippedId: gs.equippedId, auraEnchantments: gs.auraEnchantments })
+        .then(() => pushNotif('Synced to server! 💾', [80,255,80]))
+        .catch(err => pushNotif(`Sync failed: ${err.message}`, [255,80,80]));
+    }
+  }
 });
 
 // ── Game loop ─────────────────────────────────────────────────────────────────
@@ -960,7 +1070,17 @@ function loop(ts) {
   lastTime = ts;
   t += dt;
   saveTimer += dt;
-  if (saveTimer >= 15) { gs.save(); saveTimer = 0; }
+  if (saveTimer >= 15) {
+    saveTimer = 0;
+    if (API.loggedIn) {
+      API.syncState({
+        mergedDefs: gs.mergedDefs,
+        mergedInventory: gs.mergedInventory,
+        equippedId: gs.equippedId,
+        auraEnchantments: gs.auraEnchantments,
+      }).catch(() => {});
+    }
+  }
 
   // Update particles and effects
   if (activeTab === 'game') {
@@ -992,7 +1112,7 @@ function loop(ts) {
   if (activeTab === 'game') {
     ctx.fillStyle = 'rgba(40,40,60,0.7)';
     ctx.font = '10px monospace'; ctx.textAlign = 'left';
-    ctx.fillText(`${(1/Math.max(dt,0.001)).toFixed(0)} fps  |  F5=save  |  Space=roll`, 4, H-6);
+    ctx.fillText(`${(1/Math.max(dt,0.001)).toFixed(0)} fps  |  F5=sync  |  Space=roll`, 4, H-6);
   }
 
   requestAnimationFrame(loop);
@@ -1001,9 +1121,20 @@ function loop(ts) {
 // Export ENCHANTMENT_BY_ID to window for use in screens
 window._ENCHANTMENT_BY_ID = ENCHANTMENT_BY_ID;
 
-// Initial setup
-updateHUD();
+// Start render loop immediately (canvas shows nothing until boot completes)
 requestAnimationFrame(ts => { lastTime = ts; loop(ts); });
 
-// Auto-save on close
-window.addEventListener('beforeunload', () => gs.save());
+// Boot sequence — gates all game interaction until auth+load
+boot();
+
+// Sync client-only state (merges/enchants) before tab close
+window.addEventListener('beforeunload', () => {
+  if (API.loggedIn) {
+    API.syncState({
+      mergedDefs: gs.mergedDefs,
+      mergedInventory: gs.mergedInventory,
+      equippedId: gs.equippedId,
+      auraEnchantments: gs.auraEnchantments,
+    }).catch(() => {});
+  }
+});
