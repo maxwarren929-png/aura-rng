@@ -17,9 +17,12 @@
     <button class="tab" data-tab="enchant">✨ Enchant</button>
     <button class="tab" data-tab="quests">📋 Quests</button>
     <button class="tab" data-tab="stats">📊 Stats</button>
+    <button class="tab" data-tab="chat">💬 Chat</button>
+    <button class="tab" data-tab="trade">🔄 Trade</button>
     <div id="hud-right">
       <div id="hud-coins">🪙 500</div>
       <div id="hud-sub">Lv1 · 0 rolls</div>
+      <button id="hud-auth-btn" onclick="UI.openAuthModal()">Login</button>
     </div>
   </div>
 
@@ -98,11 +101,75 @@
       <div id="stats-content"></div>
     </div>
 
+    <!-- CHAT -->
+    <div class="screen" id="screen-chat">
+      <div id="chat-wrap">
+        <div id="chat-header">
+          <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:16px">💬 Global Chat</h2>
+          <span id="chat-status" style="font-size:11px;color:#6070a0"></span>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-row">
+          <input id="chat-input" type="text" placeholder="Say something… (must be logged in)" maxlength="200" />
+          <button id="chat-send-btn" onclick="UI.sendChat()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRADE -->
+    <div class="screen" id="screen-trade">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:16px">🔄 Trade Market</h2>
+        <button class="btn green" style="font-size:12px" onclick="UI.openTradeCreate()">+ List Aura</button>
+      </div>
+      <div id="trade-pending-section" style="display:none">
+        <div style="font-size:11px;font-weight:700;color:#44ff88;letter-spacing:1px;margin-bottom:6px">INCOMING — READY TO COLLECT</div>
+        <div id="trade-pending-list"></div>
+      </div>
+      <div id="trade-mine-section" style="display:none">
+        <div style="font-size:11px;font-weight:700;color:#00e5ff;letter-spacing:1px;margin:14px 0 6px">YOUR LISTINGS</div>
+        <div id="trade-mine-list"></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:#6070a0;letter-spacing:1px;margin:14px 0 6px">OPEN TRADE MARKET</div>
+      <div id="trade-market-list"><div style="color:#6070a0;padding:20px;text-align:center">Loading…</div></div>
+    </div>
+
   </div>
 </div>
 
 <!-- Notifications -->
 <div id="notifs"></div>
+
+<!-- Auth Modal -->
+<div id="auth-overlay" onclick="if(event.target===this)UI.closeAuthModal()">
+  <div id="auth-modal">
+    <div id="auth-tabs">
+      <button class="auth-tab active" id="auth-tab-login" onclick="UI.authTab('login')">Login</button>
+      <button class="auth-tab" id="auth-tab-register" onclick="UI.authTab('register')">Register</button>
+    </div>
+    <div id="auth-error"></div>
+    <input id="auth-username" type="text" placeholder="Username" maxlength="20" autocomplete="username" />
+    <input id="auth-password" type="password" placeholder="Password" maxlength="60" autocomplete="current-password" />
+    <button id="auth-submit-btn" onclick="UI.submitAuth()">Login</button>
+    <button class="btn" style="width:100%;margin-top:6px;font-size:12px" onclick="UI.closeAuthModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- Trade Create Modal -->
+<div id="trade-create-overlay" onclick="if(event.target===this)UI.closeTradeCreate()">
+  <div id="trade-create-modal">
+    <h3 style="color:#ffd700;font-family:'Cinzel Decorative',serif;font-size:14px;margin-bottom:14px">List Aura for Trade</h3>
+    <div style="font-size:11px;color:#6070a0;margin-bottom:6px">Pick an aura from your collection:</div>
+    <select id="trade-aura-select"></select>
+    <div style="font-size:11px;color:#6070a0;margin:10px 0 6px">What do you want in return? (optional)</div>
+    <input id="trade-want-input" type="text" placeholder="e.g. Roy's Aura or any Mythic" maxlength="200" />
+    <div id="trade-create-error"></div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn green" onclick="UI.submitTradeCreate()">List Trade</button>
+      <button class="btn" onclick="UI.closeTradeCreate()">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <script type="module" src="main.js"></script>
 </body>

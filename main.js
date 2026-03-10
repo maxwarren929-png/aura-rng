@@ -2,8 +2,11 @@
 import { GameState } from './state.js';
 import { TIER_COLORS, tierRank, rarityStr, cssColor, AURA_BY_ID, ALL_AURAS } from './auras.js';
 import { ParticleSystem, LightningBolt, ScreenShake, drawCharacter, drawAuraFull, rgb } from './effects.js';
-import { renderShop, renderCollection, renderMergeGrid, renderEnchant, renderQuests, renderStats } from './screens.js';
+import { renderShop, renderCollection, renderMergeGrid, renderEnchant, renderQuests, renderStats, renderChatMessages, renderTrade } from './screens.js';
 import { ENCHANTMENT_BY_ID } from './enchantments.js';
+import { API } from './api.js';
+
+API.init();
 
 // ── Canvas setup ──────────────────────────────────────────────────────────────
 const canvas = document.getElementById('gc');
@@ -64,12 +67,26 @@ function refreshScreen(tab) {
   if (tab === 'enchant') renderEnchant(document.getElementById('enc-list'), gs, () => { updateHUD(); refreshScreen('enchant'); });
   if (tab === 'quests') renderQuests(document.getElementById('quests-list'), gs);
   if (tab === 'stats') renderStats(document.getElementById('stats-content'), gs);
+  if (tab === 'chat') loadChat();
+  if (tab === 'trade') loadTrade();
 }
 
 // ── HUD ───────────────────────────────────────────────────────────────────────
 function updateHUD() {
   document.getElementById('hud-coins').textContent = `🪙 ${gs.coins.toLocaleString()}`;
   document.getElementById('hud-sub').textContent = `Lv${gs.level} · ${gs.rolls.toLocaleString()} rolls`;
+  const authBtn = document.getElementById('hud-auth-btn');
+  if (API.loggedIn) {
+    authBtn.textContent = API.username;
+    authBtn.className = 'logged-in';
+    authBtn.onclick = () => {
+      if (confirm(`Log out as ${API.username}?`)) { API.logout(); updateHUD(); }
+    };
+  } else {
+    authBtn.textContent = 'Login';
+    authBtn.className = '';
+    authBtn.onclick = () => UI.openAuthModal();
+  }
 }
 
 // ── Notifications ─────────────────────────────────────────────────────────────
@@ -183,6 +200,91 @@ function renderMergeSlots() {
   }
 }
 
+// ── Auth modal ────────────────────────────────────────────────────────────────
+let _authMode = 'login';
+
+function showAuthOverlay(show) {
+  document.getElementById('auth-overlay').classList.toggle('open', show);
+}
+
+// ── Chat ──────────────────────────────────────────────────────────────────────
+let _chatMessages = [];
+let _chatPollInterval = null;
+
+async function loadChat() {
+  const statusEl = document.getElementById('chat-status');
+  if (statusEl) statusEl.textContent = 'Loading…';
+  try {
+    _chatMessages = await API.getChat();
+    renderChatMessages(_chatMessages, API.username);
+    if (statusEl) statusEl.textContent = `${_chatMessages.length} messages`;
+  } catch (err) {
+    if (statusEl) statusEl.textContent = err.message;
+  }
+}
+
+async function pollChat() {
+  if (activeTab !== 'chat') return;
+  try {
+    const fresh = await API.getChat();
+    if (fresh.length !== _chatMessages.length || (fresh.length && fresh[fresh.length-1].id !== _chatMessages[_chatMessages.length-1]?.id)) {
+      _chatMessages = fresh;
+      renderChatMessages(_chatMessages, API.username);
+    }
+  } catch {}
+}
+
+// Poll chat every 5 seconds
+setInterval(pollChat, 5000);
+
+// Enter key sends chat
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') UI.sendChat();
+});
+
+// Enter key submits auth
+document.getElementById('auth-password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') UI.submitAuth();
+});
+
+// ── Trade ─────────────────────────────────────────────────────────────────────
+async function loadTrade() {
+  document.getElementById('trade-market-list').innerHTML = '<div style="color:#6070a0;padding:20px;text-align:center">Loading…</div>';
+  try {
+    const [market, mine, pending] = await Promise.all([
+      API.getTrades(),
+      API.loggedIn ? API.getMyTrades() : Promise.resolve([]),
+      API.loggedIn ? API.getPendingAuras() : Promise.resolve([]),
+    ]);
+    renderTrade(pending, mine, market, API.username,
+      async (id) => { // claim
+        if (!API.loggedIn) { UI.openAuthModal(); return; }
+        try { await API.claimTrade(id); pushNotif('Trade request sent!', [0,229,255]); loadTrade(); }
+        catch (e) { pushNotif(e.message, [255,80,80]); }
+      },
+      async (id) => { // complete
+        try { await API.completeTrade(id); pushNotif('Trade confirmed! Aura sent.', [80,255,80]); loadTrade(); }
+        catch (e) { pushNotif(e.message, [255,80,80]); }
+      },
+      async (id) => { // cancel
+        try { await API.cancelTrade(id); pushNotif('Listing cancelled.', [200,200,200]); loadTrade(); }
+        catch (e) { pushNotif(e.message, [255,80,80]); }
+      },
+      async (id) => { // collect pending aura
+        try {
+          const aura = await API.claimPendingAura(id);
+          gs.auras[aura.aura_id] = (gs.auras[aura.aura_id] || 0) + 1;
+          gs.save();
+          pushNotif(`Received ${aura.aura_name}! Added to collection.`, [80,255,80]);
+          loadTrade();
+        } catch (e) { pushNotif(e.message, [255,80,80]); }
+      }
+    );
+  } catch (err) {
+    document.getElementById('trade-market-list').innerHTML = `<div style="color:#ff5555;padding:20px;text-align:center">${err.message}</div>`;
+  }
+}
+
 window.UI = {
   mergeSlotClick(slot) {
     if (slot === 'a') mergeSlotA = null;
@@ -204,6 +306,83 @@ window.UI = {
     gs.pushNotification('Enchantment removed.', [200,200,200]);
     flushNotifications();
     refreshScreen('enchant');
+  },
+
+  // Auth
+  openAuthModal() { showAuthOverlay(true); document.getElementById('auth-error').textContent = ''; document.getElementById('auth-username').focus(); },
+  closeAuthModal() { showAuthOverlay(false); },
+  authTab(mode) {
+    _authMode = mode;
+    document.querySelectorAll('.auth-tab').forEach(b => b.classList.toggle('active', b.id === `auth-tab-${mode}`));
+    document.getElementById('auth-submit-btn').textContent = mode === 'login' ? 'Login' : 'Register';
+    document.getElementById('auth-error').textContent = '';
+  },
+  async submitAuth() {
+    const username = document.getElementById('auth-username').value.trim();
+    const password = document.getElementById('auth-password').value;
+    const errEl = document.getElementById('auth-error');
+    const btn = document.getElementById('auth-submit-btn');
+    if (!username || !password) { errEl.textContent = 'Fill in both fields.'; return; }
+    btn.disabled = true;
+    btn.textContent = '…';
+    try {
+      if (_authMode === 'login') await API.login(username, password);
+      else await API.register(username, password);
+      showAuthOverlay(false);
+      updateHUD();
+      pushNotif(`Welcome, ${API.username}!`, [80,255,80]);
+      document.getElementById('auth-username').value = '';
+      document.getElementById('auth-password').value = '';
+    } catch (err) {
+      errEl.textContent = err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = _authMode === 'login' ? 'Login' : 'Register';
+    }
+  },
+
+  // Chat
+  async sendChat() {
+    if (!API.loggedIn) { UI.openAuthModal(); return; }
+    const input = document.getElementById('chat-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    try {
+      const m = await API.sendChat(msg);
+      _chatMessages.push(m);
+      renderChatMessages(_chatMessages, API.username);
+    } catch (err) {
+      pushNotif(err.message, [255,80,80]);
+    }
+  },
+
+  // Trade
+  openTradeCreate() {
+    if (!API.loggedIn) { UI.openAuthModal(); return; }
+    const coll = gs.collection();
+    const sel = document.getElementById('trade-aura-select');
+    sel.innerHTML = coll.map(a => `<option value="${a.id}">[${a.tier}] ${a.name}</option>`).join('');
+    document.getElementById('trade-want-input').value = '';
+    document.getElementById('trade-create-error').textContent = '';
+    document.getElementById('trade-create-overlay').classList.add('open');
+  },
+  closeTradeCreate() { document.getElementById('trade-create-overlay').classList.remove('open'); },
+  async submitTradeCreate() {
+    const auraId = document.getElementById('trade-aura-select').value;
+    const want = document.getElementById('trade-want-input').value.trim();
+    const errEl = document.getElementById('trade-create-error');
+    if (!auraId) { errEl.textContent = 'Pick an aura.'; return; }
+    const aura = gs.getAura(auraId);
+    if (!aura) { errEl.textContent = 'Aura not found.'; return; }
+    try {
+      await API.createTrade(auraId, aura.name, aura.tier, want);
+      UI.closeTradeCreate();
+      pushNotif(`${aura.name} listed for trade!`, [0,229,255]);
+      loadTrade();
+    } catch (err) {
+      errEl.textContent = err.message;
+    }
   },
 };
 

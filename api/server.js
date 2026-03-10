@@ -15,6 +15,7 @@ app.use(express.json());
 app.use('/api/auth',    require('./routes/auth'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/chat',    require('./routes/chat'));
+app.use('/api/trades',  require('./routes/trades'));
 
 // Health check
 app.get('/api/health', (_req, res) => res.json({ ok: true }));

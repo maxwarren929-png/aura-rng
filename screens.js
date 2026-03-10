@@ -424,3 +424,108 @@ export function renderStats(container, gs) {
     </div>
   </div>`;
 }
+
+// ── CHAT ──────────────────────────────────────────────────────────────────────
+export function renderChatMessages(messages, myUsername) {
+  const el = document.getElementById('chat-messages');
+  if (!el) return;
+  const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 60;
+  el.innerHTML = messages.map(m => {
+    const isOwn = m.username === myUsername;
+    const time = new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return `<div class="chat-msg${isOwn?' own':''}">
+      <span class="chat-user">${escHtml(m.username)}</span>
+      <span class="chat-text">${escHtml(m.message)}</span>
+      <span class="chat-time">${time}</span>
+    </div>`;
+  }).join('');
+  if (atBottom || messages.length === 0) el.scrollTop = el.scrollHeight;
+}
+
+// ── TRADE ─────────────────────────────────────────────────────────────────────
+export function renderTrade(pending, mine, market, myUsername, onClaim, onComplete, onCancel, onCollect) {
+  // Pending incoming
+  const pendingSection = document.getElementById('trade-pending-section');
+  const pendingList = document.getElementById('trade-pending-list');
+  if (pending.length) {
+    pendingSection.style.display = '';
+    pendingList.innerHTML = pending.map(p => `
+      <div class="trade-card pending-in">
+        <div class="trade-meta">
+          <div class="trade-aura" style="color:${tierColor(p.aura_tier)}">${escHtml(p.aura_name)}</div>
+          <div class="trade-from">from ${escHtml(p.from_username)}</div>
+        </div>
+        <button onclick="window._tradeCollect(${p.id})"
+          style="padding:6px 12px;border-radius:7px;border:1px solid #44ff88;background:#082010;color:#44ff88;font-weight:700;font-size:12px;cursor:pointer">
+          Add to Collection
+        </button>
+      </div>`).join('');
+  } else {
+    pendingSection.style.display = 'none';
+  }
+
+  // My listings
+  const mineSection = document.getElementById('trade-mine-section');
+  const mineList = document.getElementById('trade-mine-list');
+  if (mine.length) {
+    mineSection.style.display = '';
+    mineList.innerHTML = mine.map(t => {
+      const isClaimed = t.status === 'claimed';
+      return `<div class="trade-card${isClaimed?' claimed':''}">
+        <div class="trade-meta">
+          <div class="trade-aura" style="color:${tierColor(t.aura_tier)}">${escHtml(t.aura_name)}</div>
+          ${t.want_description ? `<div class="trade-want">Want: ${escHtml(t.want_description)}</div>` : ''}
+          ${isClaimed ? `<div style="font-size:11px;color:#44ff88;margin-top:3px">Claimed by ${escHtml(t.claimed_by_username)} — confirm delivery below</div>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          ${isClaimed ? `<button onclick="window._tradeComplete(${t.id})"
+            style="padding:5px 10px;border-radius:6px;border:1px solid #44ff88;background:#082010;color:#44ff88;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap">
+            Confirm Sent
+          </button>` : ''}
+          <button onclick="window._tradeCancel(${t.id})"
+            style="padding:5px 10px;border-radius:6px;border:1px solid #ff5555;background:#280808;color:#ff5555;font-weight:700;font-size:11px;cursor:pointer">
+            Cancel
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    mineSection.style.display = 'none';
+  }
+
+  // Market
+  const marketList = document.getElementById('trade-market-list');
+  const openTrades = market.filter(t => t.from_username !== myUsername && (t.status === 'open' || t.status === 'claimed'));
+  if (!openTrades.length) {
+    marketList.innerHTML = '<div style="color:#6070a0;padding:20px;text-align:center">No open trades right now.</div>';
+  } else {
+    marketList.innerHTML = openTrades.map(t => `
+      <div class="trade-card">
+        <div class="trade-meta">
+          <div class="trade-aura" style="color:${tierColor(t.aura_tier)}">${escHtml(t.aura_name)} <span style="font-size:10px;color:${tierColor(t.aura_tier)};opacity:.7">[${escHtml(t.aura_tier)}]</span></div>
+          <div class="trade-from">by ${escHtml(t.from_username)}</div>
+          ${t.want_description ? `<div class="trade-want">Wants: ${escHtml(t.want_description)}</div>` : ''}
+        </div>
+        ${t.status === 'open' ? `<button onclick="window._tradeClaim(${t.id})"
+          style="padding:6px 12px;border-radius:7px;border:1px solid #00e5ff;background:#001a20;color:#00e5ff;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap">
+          Request
+        </button>` : `<span style="font-size:11px;color:#6070a0;white-space:nowrap">Pending…</span>`}
+      </div>`).join('');
+  }
+
+  window._tradeCollect = onCollect;
+  window._tradeComplete = onComplete;
+  window._tradeCancel = onCancel;
+  window._tradeClaim = onClaim;
+}
+
+function tierColor(tier) {
+  const map = { Common:'#a0a0c0', Uncommon:'#50dc50', Rare:'#508cff', Epic:'#b450ff',
+    Legendary:'#ffa500', Mythic:'#ff3c3c', Divine:'#ffe650', Cosmic:'#78ffff',
+    Godly:'#ff50c8', Femboy:'#ff96dc', '???':'#ffffff' };
+  return map[tier] || '#a0a0c0';
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
