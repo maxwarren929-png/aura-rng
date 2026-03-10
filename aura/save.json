@@ -1,0 +1,5501 @@
+{
+  "rolls": 1294,
+  "coins": 218263,
+  "xp": 4478,
+  "level": 23,
+  "luck_level": 9,
+  "speed_level": 4,
+  "auto_roll": false,
+  "auto_unlocked": true,
+  "multi_roll": 10,
+  "potion_active": false,
+  "potion_rolls_left": 0,
+  "potion_mult": 5.0,
+  "inventory": {
+    "rose": 4,
+    "solar": 1,
+    "shadow": 46,
+    "wind": 0,
+    "smoke": 33,
+    "arctic": 1,
+    "frost": 83,
+    "leaf": 53,
+    "mud": 31,
+    "ember": 10,
+    "thunder": 2,
+    "aqua": 51,
+    "sand": 48,
+    "inferno": 3,
+    "lunar": 0,
+    "lava": 0,
+    "venom": 2,
+    "void": 0,
+    "salvage_aura": 1,
+    "melt": 0,
+    "crystal": 0,
+    "phantom": 0,
+    "miner_aura": 0,
+    "tsunami": 1,
+    "storm": 0,
+    "gay": 1,
+    "romit": 129,
+    "brenden": 64,
+    "brayden": 161,
+    "christian": 11,
+    "anthony": 88,
+    "arman": 2,
+    "max": 6,
+    "john": 94,
+    "jamie": 17,
+    "ashton": 12,
+    "varun": 26,
+    "swan": 1,
+    "james": 21,
+    "bloodocean": 0,
+    "luis": 5,
+    "deepocean": 0,
+    "juno": 3,
+    "roy": 1,
+    "karna": 0,
+    "isaac": 2,
+    "solarkings": 1,
+    "mintblue": 1
+  },
+  "merged_defs": {
+    "melt": {
+      "id": "melt",
+      "name": "Meltdown",
+      "rarity": 3500,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          100,
+          180,
+          255
+        ]
+      ],
+      "particles": 32,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Opposites collide in a sizzling melt.",
+      "sell_value": 30,
+      "xp_reward": 30
+    },
+    "blizzard": {
+      "id": "blizzard",
+      "name": "Blizzard",
+      "rarity": 8000,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          140,
+          200,
+          240
+        ],
+        [
+          100,
+          160,
+          220
+        ]
+      ],
+      "particles": 44,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": false,
+      "description": "Ice shards hurled on howling winds.",
+      "sell_value": 80,
+      "xp_reward": 70
+    },
+    "m__blizzard__melt": {
+      "id": "m__blizzard__melt",
+      "name": "Blizdown",
+      "rarity": 12472,
+      "tier": "Epic",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          140,
+          200,
+          240
+        ],
+        [
+          255,
+          80,
+          0
+        ]
+      ],
+      "particles": 76,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": true,
+      "description": "Blizzard's essence fused with Meltdown.",
+      "sell_value": 300,
+      "xp_reward": 90
+    },
+    "m__arctic__thunder": {
+      "id": "m__arctic__thunder",
+      "name": "Arctithund",
+      "rarity": 156,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          100,
+          200,
+          240
+        ],
+        [
+          140,
+          100,
+          255
+        ]
+      ],
+      "particles": 48,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Arctic and Thunder.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__arctic__m__arctic__thunder": {
+      "id": "m__arctic__m__arctic__thunder",
+      "name": "Arctbloom",
+      "rarity": 233,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          100,
+          200,
+          240
+        ]
+      ],
+      "particles": 72,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Arctithund's essence fused with Arctic.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__arctic__m__arctic__thunder__rose": {
+      "id": "m__m__arctic__m__arctic__thunder__rose",
+      "name": "QuasiRose",
+      "rarity": 172,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          200,
+          40,
+          80
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 94,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Rose meets Arctbloom.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__m__arctic__m__arctic__thunder__rose__rose": {
+      "id": "m__m__m__arctic__m__arctic__thunder__rose__rose",
+      "name": "ProtoQuas",
+      "rarity": 145,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          200,
+          40,
+          80
+        ]
+      ],
+      "particles": 116,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "QuasiRose's essence fused with Rose.",
+      "sell_value": 25,
+      "xp_reward": 110
+    },
+    "m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose": {
+      "id": "m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose",
+      "name": "Protdrift",
+      "rarity": 132,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          200,
+          40,
+          80
+        ]
+      ],
+      "particles": 138,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither ProtoQuas nor Rose, yet both.",
+      "sell_value": 25,
+      "xp_reward": 130
+    },
+    "m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud": {
+      "id": "m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud",
+      "name": "Protd",
+      "rarity": 95,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          100,
+          70,
+          40
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          140,
+          100,
+          60
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          80,
+          55,
+          30
+        ]
+      ],
+      "particles": 148,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Protdrift meets Mud.",
+      "sell_value": 5,
+      "xp_reward": 150
+    },
+    "m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud": {
+      "id": "m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud",
+      "name": "ArchEmbe",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          100,
+          70,
+          40
+        ],
+        [
+          200,
+          40,
+          0
+        ],
+        [
+          255,
+          80,
+          120
+        ]
+      ],
+      "particles": 162,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Ember nor Protd, yet both.",
+      "sell_value": 5,
+      "xp_reward": 170
+    },
+    "m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose": {
+      "id": "m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose",
+      "name": "Archpulse",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          200,
+          40,
+          80
+        ]
+      ],
+      "particles": 184,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of ArchEmbe and Rose.",
+      "sell_value": 5,
+      "xp_reward": 190
+    },
+    "m__m__blizzard__melt__smoke": {
+      "id": "m__m__blizzard__melt__smoke",
+      "name": "ProtoBliz",
+      "rarity": 1051,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          160,
+          160,
+          160
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          60,
+          60,
+          60
+        ]
+      ],
+      "particles": 88,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": true,
+      "description": "What happens when Blizdown meets Smoke.",
+      "sell_value": 80,
+      "xp_reward": 110
+    },
+    "m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose": {
+      "id": "m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose",
+      "name": "Protoarchp",
+      "rarity": 486,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          80,
+          120
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": true,
+      "description": "A blend of ProtoBliz and Archpulse.",
+      "sell_value": 25,
+      "xp_reward": 210
+    },
+    "m__m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose__rose": {
+      "id": "m__m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose__rose",
+      "name": "InfraProt",
+      "rarity": 258,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          200,
+          40,
+          80
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": true,
+      "description": "What happens when Protoarchp meets Rose.",
+      "sell_value": 25,
+      "xp_reward": 230
+    },
+    "m__m__m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose__rose__mud": {
+      "id": "m__m__m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose__rose__mud",
+      "name": "Inframud",
+      "rarity": 137,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          100,
+          70,
+          40
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          140,
+          100,
+          60
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          80,
+          55,
+          30
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": true,
+      "description": "A blend of InfraProt and Mud.",
+      "sell_value": 25,
+      "xp_reward": 250
+    },
+    "m__aqua__shadow": {
+      "id": "m__aqua__shadow",
+      "name": "Aqdow",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          0,
+          240,
+          200
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          0,
+          120,
+          180
+        ],
+        [
+          20,
+          0,
+          40
+        ]
+      ],
+      "particles": 26,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Aqua and Shadow.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__aqua__sand": {
+      "id": "m__aqua__sand",
+      "name": "OmniSand",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          240,
+          210,
+          160
+        ],
+        [
+          0,
+          240,
+          200
+        ],
+        [
+          180,
+          150,
+          100
+        ],
+        [
+          0,
+          120,
+          180
+        ]
+      ],
+      "particles": 26,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Sand meets Aqua.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__m__aqua__sand__m__aqua__shadow": {
+      "id": "m__m__aqua__sand__m__aqua__shadow",
+      "name": "ArchOmni",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          240,
+          210,
+          160
+        ],
+        [
+          0,
+          240,
+          200
+        ]
+      ],
+      "particles": 52,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither OmniSand nor Aqdow, yet both.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow": {
+      "id": "m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow",
+      "name": "Omniomni",
+      "rarity": 91,
+      "tier": "Common",
+      "colors": [
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          240,
+          210,
+          160
+        ],
+        [
+          0,
+          180,
+          220
+        ]
+      ],
+      "particles": 78,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither OmniSand nor ArchOmni, yet both.",
+      "sell_value": 5,
+      "xp_reward": 70
+    },
+    "m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow": {
+      "id": "m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow",
+      "name": "Omniomni",
+      "rarity": 102,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          240,
+          210,
+          160
+        ],
+        [
+          0,
+          180,
+          220
+        ]
+      ],
+      "particles": 104,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither OmniSand nor Omniomni, yet both.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow": {
+      "id": "m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow",
+      "name": "InfraOmni",
+      "rarity": 66,
+      "tier": "Common",
+      "colors": [
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          240,
+          200
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          0,
+          120,
+          180
+        ]
+      ],
+      "particles": 118,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Omniomni nor Aqua, yet both.",
+      "sell_value": 5,
+      "xp_reward": 110
+    },
+    "m__inferno__thunder": {
+      "id": "m__inferno__thunder",
+      "name": "Inferthund",
+      "rarity": 135,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          255,
+          255,
+          80
+        ],
+        [
+          140,
+          100,
+          255
+        ]
+      ],
+      "particles": 52,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Inferno's essence fused with Thunder.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder": {
+      "id": "m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder",
+      "name": "ArchInfe",
+      "rarity": 148,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          210,
+          180,
+          130
+        ]
+      ],
+      "particles": 170,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Inferthund and InfraOmni.",
+      "sell_value": 25,
+      "xp_reward": 130
+    },
+    "m__smoke__smoke": {
+      "id": "m__smoke__smoke",
+      "name": "Smokdrift",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          160,
+          160,
+          160
+        ],
+        [
+          160,
+          160,
+          160
+        ],
+        [
+          60,
+          60,
+          60
+        ],
+        [
+          60,
+          60,
+          60
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Smoke's essence fused with Smoke.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__sand__sand": {
+      "id": "m__sand__sand",
+      "name": "Sand",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          240,
+          210,
+          160
+        ],
+        [
+          240,
+          210,
+          160
+        ],
+        [
+          180,
+          150,
+          100
+        ],
+        [
+          180,
+          150,
+          100
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Sand and Sand.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__aqua__aqua": {
+      "id": "m__aqua__aqua",
+      "name": "MetaAqua",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          0,
+          240,
+          200
+        ],
+        [
+          0,
+          240,
+          200
+        ],
+        [
+          0,
+          120,
+          180
+        ],
+        [
+          0,
+          120,
+          180
+        ]
+      ],
+      "particles": 28,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Aqua nor Aqua, yet both.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__m__aqua__aqua__m__sand__sand": {
+      "id": "m__m__aqua__aqua__m__sand__sand",
+      "name": "UltraMeta",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          0,
+          240,
+          200
+        ],
+        [
+          240,
+          210,
+          160
+        ]
+      ],
+      "particles": 52,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "MetaAqua's essence fused with Sand.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke": {
+      "id": "m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke",
+      "name": "Ultrasmokd",
+      "rarity": 91,
+      "tier": "Common",
+      "colors": [
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          160,
+          160,
+          160
+        ]
+      ],
+      "particles": 76,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of UltraMeta and Smokdrift.",
+      "sell_value": 5,
+      "xp_reward": 70
+    },
+    "m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke": {
+      "id": "m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke",
+      "name": "ArchIultra",
+      "rarity": 186,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          210,
+          180,
+          130
+        ],
+        [
+          100,
+          100,
+          100
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          210,
+          180,
+          130
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither ArchInfe nor Ultrasmokd, yet both.",
+      "sell_value": 25,
+      "xp_reward": 150
+    },
+    "m__leaf__shadow": {
+      "id": "m__leaf__shadow",
+      "name": "OmniShad",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          120,
+          255,
+          80
+        ],
+        [
+          20,
+          0,
+          40
+        ],
+        [
+          40,
+          150,
+          40
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Shadow's essence fused with Leaf.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__leaf__leaf": {
+      "id": "m__leaf__leaf",
+      "name": "QuasiLeaf",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          120,
+          255,
+          80
+        ],
+        [
+          120,
+          255,
+          80
+        ],
+        [
+          40,
+          150,
+          40
+        ],
+        [
+          40,
+          150,
+          40
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Leaf nor Leaf, yet both.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__m__leaf__leaf__m__leaf__shadow": {
+      "id": "m__m__leaf__leaf__m__leaf__shadow",
+      "name": "ArchQuas",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          120,
+          255,
+          80
+        ],
+        [
+          120,
+          0,
+          160
+        ]
+      ],
+      "particles": 48,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of QuasiLeaf and OmniShad.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow": {
+      "id": "m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow",
+      "name": "Archlight",
+      "rarity": 91,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          0,
+          240,
+          200
+        ]
+      ],
+      "particles": 74,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither ArchQuas nor Aqdow, yet both.",
+      "sell_value": 5,
+      "xp_reward": 70
+    },
+    "m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke": {
+      "id": "m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke",
+      "name": "Archlarchi",
+      "rarity": 211,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          210,
+          180,
+          130
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Archlight nor ArchIultra, yet both.",
+      "sell_value": 25,
+      "xp_reward": 170
+    },
+    "m__ember__ember": {
+      "id": "m__ember__ember",
+      "name": "OmniEmbe",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          200,
+          40,
+          0
+        ],
+        [
+          200,
+          40,
+          0
+        ]
+      ],
+      "particles": 28,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Ember meets Ember.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__m__ember__ember__m__ember__ember": {
+      "id": "m__m__ember__ember__m__ember__ember",
+      "name": "OmniOmni",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          140,
+          0
+        ]
+      ],
+      "particles": 56,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither OmniEmbe nor OmniEmbe, yet both.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__leaf__shadow__m__m__ember__ember__m__ember__ember": {
+      "id": "m__m__leaf__shadow__m__m__ember__ember__m__ember__ember",
+      "name": "Omniflare",
+      "rarity": 91,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          255,
+          80,
+          20
+        ]
+      ],
+      "particles": 80,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "OmniShad's essence fused with OmniOmni.",
+      "sell_value": 5,
+      "xp_reward": 70
+    },
+    "m__frost__frost": {
+      "id": "m__frost__frost",
+      "name": "Frostfrost",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          60,
+          160,
+          220
+        ],
+        [
+          60,
+          160,
+          220
+        ]
+      ],
+      "particles": 28,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Frost and Frost.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__m__frost__frost__m__frost__frost": {
+      "id": "m__m__frost__frost__m__frost__frost",
+      "name": "Frostfrost",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          200,
+          240,
+          255
+        ]
+      ],
+      "particles": 56,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Frostfrost meets Frostfrost.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": {
+      "id": "m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost",
+      "name": "Frostfrost",
+      "rarity": 112,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          200,
+          255
+        ]
+      ],
+      "particles": 112,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Frostfrost's essence fused with Frostfrost.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": {
+      "id": "m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost",
+      "name": "InfraFros",
+      "rarity": 160,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          60,
+          200,
+          60
+        ]
+      ],
+      "particles": 192,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Frostfrost meets Omniflare.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": {
+      "id": "m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost",
+      "name": "Archlinfra",
+      "rarity": 309,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          0,
+          180,
+          220
+        ],
+        [
+          120,
+          200,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Archlarchi nor InfraFros, yet both.",
+      "sell_value": 25,
+      "xp_reward": 190
+    },
+    "m__m__m__frost__frost__m__frost__frost__shadow": {
+      "id": "m__m__m__frost__frost__m__frost__frost__shadow",
+      "name": "Shafrost",
+      "rarity": 51,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          20,
+          0,
+          40
+        ],
+        [
+          120,
+          200,
+          255
+        ]
+      ],
+      "particles": 68,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Shadow's essence fused with Frostfrost.",
+      "sell_value": 5,
+      "xp_reward": 70
+    },
+    "m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow": {
+      "id": "m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow",
+      "name": "Quasrift",
+      "rarity": 74,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          120,
+          255,
+          80
+        ],
+        [
+          120,
+          0,
+          160
+        ]
+      ],
+      "particles": 92,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "QuasiLeaf's essence fused with Shafrost.",
+      "sell_value": 5,
+      "xp_reward": 90
+    },
+    "m__melt__melt": {
+      "id": "m__melt__melt",
+      "name": "Meltdmeltd",
+      "rarity": 7915,
+      "tier": "Rare",
+      "colors": [
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          255,
+          80,
+          0
+        ]
+      ],
+      "particles": 64,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Meltdown's essence fused with Meltdown.",
+      "sell_value": 80,
+      "xp_reward": 50
+    },
+    "m__m__ember__ember__m__m__ember__ember__m__ember__ember": {
+      "id": "m__m__ember__ember__m__m__ember__ember__m__ember__ember",
+      "name": "ProtoOmni",
+      "rarity": 91,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          80,
+          20
+        ]
+      ],
+      "particles": 84,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of OmniEmbe and OmniOmni.",
+      "sell_value": 5,
+      "xp_reward": 70
+    },
+    "m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow": {
+      "id": "m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow",
+      "name": "Quasrproto",
+      "rarity": 127,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          255,
+          80,
+          20
+        ]
+      ],
+      "particles": 176,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Quasrift meets ProtoOmni.",
+      "sell_value": 25,
+      "xp_reward": 110
+    },
+    "m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow": {
+      "id": "m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow",
+      "name": "Quassurge",
+      "rarity": 123,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          120,
+          255,
+          80
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Quasrproto's essence fused with QuasiLeaf.",
+      "sell_value": 25,
+      "xp_reward": 130
+    },
+    "m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": {
+      "id": "m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost",
+      "name": "Quasinfra",
+      "rarity": 330,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          30,
+          0
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Quassurge and Archlinfra.",
+      "sell_value": 25,
+      "xp_reward": 210
+    },
+    "m__salvage_aura__void": {
+      "id": "m__salvage_aura__void",
+      "name": "Salvavoid",
+      "rarity": 12225,
+      "tier": "Epic",
+      "colors": [
+        [
+          160,
+          120,
+          80
+        ],
+        [
+          10,
+          0,
+          20
+        ],
+        [
+          200,
+          160,
+          100
+        ],
+        [
+          80,
+          0,
+          100
+        ],
+        [
+          120,
+          80,
+          40
+        ],
+        [
+          200,
+          0,
+          255
+        ]
+      ],
+      "particles": 64,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "Salvage Aura's essence fused with Void.",
+      "sell_value": 300,
+      "xp_reward": 80
+    },
+    "m__m__melt__melt__m__salvage_aura__void": {
+      "id": "m__m__melt__melt__m__salvage_aura__void",
+      "name": "Meltrift",
+      "rarity": 24668,
+      "tier": "Epic",
+      "colors": [
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          160,
+          120,
+          80
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          10,
+          0,
+          20
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          160,
+          100
+        ]
+      ],
+      "particles": 128,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "A blend of Meltdmeltd and Salvavoid.",
+      "sell_value": 300,
+      "xp_reward": 100
+    },
+    "m__melt__miner_aura": {
+      "id": "m__melt__miner_aura",
+      "name": "Meltshade",
+      "rarity": 7272,
+      "tier": "Rare",
+      "colors": [
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          180,
+          140,
+          80
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          220,
+          180,
+          100
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          140,
+          100,
+          50
+        ]
+      ],
+      "particles": 60,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Meltdown nor Miner's Aura, yet both.",
+      "sell_value": 80,
+      "xp_reward": 60
+    },
+    "m__crystal__phantom": {
+      "id": "m__crystal__phantom",
+      "name": "Crysshade",
+      "rarity": 2493,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          80,
+          0,
+          120
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          200,
+          0,
+          255
+        ],
+        [
+          180,
+          220,
+          255
+        ],
+        [
+          255,
+          80,
+          255
+        ]
+      ],
+      "particles": 78,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Crystal and Phantom.",
+      "sell_value": 80,
+      "xp_reward": 80
+    },
+    "m__crystal__m__crystal__phantom": {
+      "id": "m__crystal__m__crystal__phantom",
+      "name": "Cryspulse",
+      "rarity": 4121,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          80,
+          0,
+          120
+        ],
+        [
+          180,
+          220,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "particles": 118,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Crystal and Crysshade.",
+      "sell_value": 80,
+      "xp_reward": 100
+    },
+    "m__m__crystal__m__crystal__phantom__m__melt__miner_aura": {
+      "id": "m__m__crystal__m__crystal__phantom__m__melt__miner_aura",
+      "name": "Meltscrysp",
+      "rarity": 12946,
+      "tier": "Epic",
+      "colors": [
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          180,
+          140,
+          80
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "particles": 178,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "A blend of Meltshade and Cryspulse.",
+      "sell_value": 300,
+      "xp_reward": 120
+    },
+    "m__lunar__lunar": {
+      "id": "m__lunar__lunar",
+      "name": "Lunarlunar",
+      "rarity": 1347,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          140,
+          0,
+          200
+        ],
+        [
+          140,
+          0,
+          200
+        ]
+      ],
+      "particles": 68,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Lunar meets Lunar.",
+      "sell_value": 80,
+      "xp_reward": 80
+    },
+    "m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": {
+      "id": "m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost",
+      "name": "Quaslunar",
+      "rarity": 1277,
+      "tier": "Rare",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Quasinfra and Lunarlunar.",
+      "sell_value": 80,
+      "xp_reward": 230
+    },
+    "m__m__m__crystal__m__crystal__phantom__m__melt__miner_aura__m__m__melt__melt__m__salvage_aura__void": {
+      "id": "m__m__m__crystal__m__crystal__phantom__m__melt__miner_aura__m__m__melt__melt__m__salvage_aura__void",
+      "name": "Meltrmelts",
+      "rarity": 47571,
+      "tier": "Legendary",
+      "colors": [
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          160,
+          120,
+          80
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          180,
+          140,
+          80
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": true,
+      "trail": true,
+      "description": "What happens when Meltrift meets Meltscrysp.",
+      "sell_value": 300,
+      "xp_reward": 140
+    },
+    "m__shadow__shadow": {
+      "id": "m__shadow__shadow",
+      "name": "Shadow",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          20,
+          0,
+          40
+        ],
+        [
+          20,
+          0,
+          40
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Shadow meets Shadow.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__venom__venom": {
+      "id": "m__venom__venom",
+      "name": "Venomvenom",
+      "rarity": 302,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          0,
+          200,
+          0
+        ],
+        [
+          0,
+          200,
+          0
+        ],
+        [
+          160,
+          255,
+          0
+        ],
+        [
+          160,
+          255,
+          0
+        ]
+      ],
+      "particles": 52,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Venom's essence fused with Venom.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__lava__lava": {
+      "id": "m__lava__lava",
+      "name": "Lavastorm",
+      "rarity": 377,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          200,
+          40,
+          0
+        ],
+        [
+          200,
+          40,
+          0
+        ],
+        [
+          255,
+          200,
+          0
+        ],
+        [
+          255,
+          200,
+          0
+        ]
+      ],
+      "particles": 52,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Lava meets Lava.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__arctic__arctic": {
+      "id": "m__arctic__arctic",
+      "name": "Arctic",
+      "rarity": 211,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          100,
+          200,
+          240
+        ],
+        [
+          100,
+          200,
+          240
+        ]
+      ],
+      "particles": 48,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Arctic and Arctic.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__m__lava__lava__m__lava__lava": {
+      "id": "m__m__lava__lava__m__lava__lava",
+      "name": "Lavaslavas",
+      "rarity": 682,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          200,
+          40,
+          0
+        ],
+        [
+          200,
+          40,
+          0
+        ]
+      ],
+      "particles": 104,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Lavastorm nor Lavastorm, yet both.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__inferno__inferno": {
+      "id": "m__inferno__inferno",
+      "name": "Inferinfer",
+      "rarity": 158,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          255,
+          255,
+          80
+        ],
+        [
+          255,
+          255,
+          80
+        ]
+      ],
+      "particles": 56,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Inferno meets Inferno.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__m__venom__venom__m__venom__venom": {
+      "id": "m__m__venom__venom__m__venom__venom",
+      "name": "Venomvenom",
+      "rarity": 534,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          0,
+          200,
+          0
+        ],
+        [
+          0,
+          200,
+          0
+        ]
+      ],
+      "particles": 104,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Venomvenom's essence fused with Venomvenom.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom": {
+      "id": "m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom",
+      "name": "Lavasvenom",
+      "rarity": 1144,
+      "tier": "Rare",
+      "colors": [
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          80,
+          255,
+          80
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Lavaslavas's essence fused with Venomvenom.",
+      "sell_value": 80,
+      "xp_reward": 90
+    },
+    "m__m__arctic__arctic__m__inferno__inferno": {
+      "id": "m__m__arctic__arctic__m__inferno__inferno",
+      "name": "Arcinfer",
+      "rarity": 307,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          160,
+          0
+        ]
+      ],
+      "particles": 104,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Arctic meets Inferinfer.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__arctic__m__m__arctic__arctic__m__inferno__inferno": {
+      "id": "m__arctic__m__m__arctic__arctic__m__inferno__inferno",
+      "name": "Arcinarcti",
+      "rarity": 339,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          100,
+          200,
+          240
+        ]
+      ],
+      "particles": 128,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Arcinfer and Arctic.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__inferno__inferno__m__inferno__inferno": {
+      "id": "m__m__inferno__inferno__m__inferno__inferno",
+      "name": "OmniInfe",
+      "rarity": 262,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          255,
+          160,
+          0
+        ]
+      ],
+      "particles": 112,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Inferinfer meets Inferinfer.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno": {
+      "id": "m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno",
+      "name": "Arcininfe",
+      "rarity": 526,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Arcinarcti and OmniInfe.",
+      "sell_value": 25,
+      "xp_reward": 110
+    },
+    "m__inferno__m__inferno__inferno": {
+      "id": "m__inferno__m__inferno__inferno",
+      "name": "Infererno",
+      "rarity": 203,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          255,
+          160,
+          0
+        ],
+        [
+          255,
+          255,
+          80
+        ]
+      ],
+      "particles": 84,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Inferinfer's essence fused with Inferno.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__inferno__m__inferno__inferno__thunder": {
+      "id": "m__m__inferno__m__inferno__inferno__thunder",
+      "name": "Thundinfer",
+      "rarity": 199,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          140,
+          100,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ]
+      ],
+      "particles": 108,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Thunder and Infererno.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__m__inferno__m__inferno__inferno__thunder__thunder": {
+      "id": "m__m__m__inferno__m__inferno__inferno__thunder__thunder",
+      "name": "MetaThun",
+      "rarity": 197,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          140,
+          100,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ]
+      ],
+      "particles": 132,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Thunder nor Thundinfer, yet both.",
+      "sell_value": 25,
+      "xp_reward": 110
+    },
+    "m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder": {
+      "id": "m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder",
+      "name": "Metabloom",
+      "rarity": 196,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          140,
+          100,
+          255
+        ]
+      ],
+      "particles": 156,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when MetaThun meets Thunder.",
+      "sell_value": 25,
+      "xp_reward": 130
+    },
+    "m__thunder__thunder": {
+      "id": "m__thunder__thunder",
+      "name": "Thunder",
+      "rarity": 115,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          140,
+          100,
+          255
+        ],
+        [
+          140,
+          100,
+          255
+        ]
+      ],
+      "particles": 48,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Thunder nor Thunder, yet both.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__m__thunder__thunder__m__thunder__thunder": {
+      "id": "m__m__thunder__thunder__m__thunder__thunder",
+      "name": "Thunder",
+      "rarity": 184,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ],
+        [
+          255,
+          255,
+          100
+        ]
+      ],
+      "particles": 96,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Thunder's essence fused with Thunder.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder": {
+      "id": "m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder",
+      "name": "Thunder",
+      "rarity": 309,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 192,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Thunder's essence fused with Thunder.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder": {
+      "id": "m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder",
+      "name": "Metabthund",
+      "rarity": 426,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Metabloom nor Thunder, yet both.",
+      "sell_value": 25,
+      "xp_reward": 150
+    },
+    "m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder": {
+      "id": "m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder",
+      "name": "Metabninfe",
+      "rarity": 876,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          30,
+          0
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          180,
+          240,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Metabthund meets Arcininfe.",
+      "sell_value": 25,
+      "xp_reward": 170
+    },
+    "m__rose__rose": {
+      "id": "m__rose__rose",
+      "name": "Roserose",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          200,
+          40,
+          80
+        ],
+        [
+          200,
+          40,
+          80
+        ]
+      ],
+      "particles": 44,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Rose and Rose.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__rose__rose__m__rose__rose",
+      "name": "Roserroser",
+      "rarity": 112,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          160,
+          180
+        ],
+        [
+          255,
+          160,
+          180
+        ]
+      ],
+      "particles": 88,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Roserose's essence fused with Roserose.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose",
+      "name": "Roseflare",
+      "rarity": 179,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ]
+      ],
+      "particles": 176,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Roserroser's essence fused with Roserroser.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder": {
+      "id": "m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder",
+      "name": "Rosefthund",
+      "rarity": 235,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          255,
+          100
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Roseflare and Thunder.",
+      "sell_value": 25,
+      "xp_reward": 110
+    },
+    "m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose",
+      "name": "Rosefroser",
+      "rarity": 269,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 5,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Rosefthund and Roserroser.",
+      "sell_value": 25,
+      "xp_reward": 130
+    },
+    "m__m__m__rose__rose__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__rose__rose__m__rose__rose__m__rose__rose",
+      "name": "NeoRose",
+      "rarity": 141,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          160,
+          180
+        ]
+      ],
+      "particles": 132,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Roserroser meets Roserose.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__ember__ember__m__frost__frost": {
+      "id": "m__m__ember__ember__m__frost__frost",
+      "name": "OmniEfrost",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          200,
+          240,
+          255
+        ]
+      ],
+      "particles": 56,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither OmniEmbe nor Frostfrost, yet both.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__shadow__shadow__m__shadow__shadow": {
+      "id": "m__m__shadow__shadow__m__shadow__shadow",
+      "name": "Shadow",
+      "rarity": 73,
+      "tier": "Common",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          120,
+          0,
+          160
+        ],
+        [
+          120,
+          0,
+          160
+        ]
+      ],
+      "particles": 48,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Shadow's essence fused with Shadow.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow": {
+      "id": "m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow",
+      "name": "Shafrost",
+      "rarity": 112,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          120,
+          200,
+          255
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          20
+        ]
+      ],
+      "particles": 104,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Shadow and OmniEfrost.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow": {
+      "id": "m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow",
+      "name": "OmniShaf",
+      "rarity": 141,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          60,
+          0,
+          80
+        ]
+      ],
+      "particles": 152,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Shafrost meets Shadow.",
+      "sell_value": 25,
+      "xp_reward": 90
+    },
+    "m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose",
+      "name": "Omnirose",
+      "rarity": 231,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          20
+        ],
+        [
+          255,
+          80,
+          120
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither OmniShaf nor NeoRose, yet both.",
+      "sell_value": 25,
+      "xp_reward": 110
+    },
+    "m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose",
+      "name": "Omnirrosef",
+      "rarity": 432,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Omnirose meets Rosefroser.",
+      "sell_value": 25,
+      "xp_reward": 150
+    },
+    "m__mud__mud": {
+      "id": "m__mud__mud",
+      "name": "Mudbloom",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          100,
+          70,
+          40
+        ],
+        [
+          100,
+          70,
+          40
+        ],
+        [
+          140,
+          100,
+          60
+        ],
+        [
+          140,
+          100,
+          60
+        ],
+        [
+          80,
+          55,
+          30
+        ],
+        [
+          80,
+          55,
+          30
+        ]
+      ],
+      "particles": 20,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Neither Mud nor Mud, yet both.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose",
+      "name": "Omnirmetab",
+      "rarity": 1169,
+      "tier": "Rare",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          180,
+          240,
+          255
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Omnirrosef meets Metabninfe.",
+      "sell_value": 80,
+      "xp_reward": 190
+    },
+    "m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose",
+      "name": "MetaOmni",
+      "rarity": 2341,
+      "tier": "Rare",
+      "colors": [
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          80,
+          255,
+          80
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          0
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Omnirmetab's essence fused with Lavasvenom.",
+      "sell_value": 80,
+      "xp_reward": 210
+    },
+    "m__m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost__m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": {
+      "id": "m__m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost__m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose",
+      "name": "MetaQuas",
+      "rarity": 3643,
+      "tier": "Rare",
+      "colors": [
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          255,
+          80,
+          0
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 8,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Quaslunar meets MetaOmni.",
+      "sell_value": 80,
+      "xp_reward": 250
+    },
+    "m__m__m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost__m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose__storm": {
+      "id": "m__m__m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost__m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose__storm",
+      "name": "ArchStor",
+      "rarity": 14414,
+      "tier": "Epic",
+      "colors": [
+        [
+          100,
+          100,
+          255
+        ],
+        [
+          60,
+          200,
+          60
+        ],
+        [
+          0,
+          200,
+          255
+        ],
+        [
+          60,
+          0,
+          80
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 8,
+      "pulse": true,
+      "lightning": true,
+      "star_burst": false,
+      "trail": true,
+      "description": "Storm's essence fused with MetaQuas.",
+      "sell_value": 300,
+      "xp_reward": 270
+    },
+    "m__ashton__max": {
+      "id": "m__ashton__max",
+      "name": "ProtoAsht",
+      "rarity": 337,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          200,
+          0
+        ],
+        [
+          255,
+          130,
+          150
+        ],
+        [
+          255,
+          230,
+          80
+        ],
+        [
+          200,
+          50,
+          90
+        ],
+        [
+          200,
+          155,
+          0
+        ]
+      ],
+      "particles": 50,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "Ashton's Aura's essence fused with Max's Aura.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__arman__swan": {
+      "id": "m__arman__swan",
+      "name": "HyperArma",
+      "rarity": 2353,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          80,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          140,
+          40,
+          200
+        ],
+        [
+          200,
+          240,
+          255
+        ],
+        [
+          255,
+          120,
+          255
+        ],
+        [
+          180,
+          220,
+          255
+        ]
+      ],
+      "particles": 72,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "Arman's Aura's essence fused with Swan's Aura.",
+      "sell_value": 80,
+      "xp_reward": 80
+    },
+    "m__m__arman__swan__melt": {
+      "id": "m__m__arman__swan__melt",
+      "name": "Hypedrift",
+      "rarity": 6362,
+      "tier": "Rare",
+      "colors": [
+        [
+          200,
+          80,
+          255
+        ],
+        [
+          255,
+          140,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          200,
+          200,
+          255
+        ],
+        [
+          140,
+          40,
+          200
+        ],
+        [
+          255,
+          80,
+          0
+        ]
+      ],
+      "particles": 104,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "A blend of HyperArma and Meltdown.",
+      "sell_value": 80,
+      "xp_reward": 100
+    },
+    "m__ashton__m__ashton__max": {
+      "id": "m__ashton__m__ashton__max",
+      "name": "Protoashto",
+      "rarity": 427,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          255,
+          200,
+          0
+        ],
+        [
+          255,
+          130,
+          150
+        ],
+        [
+          255,
+          130,
+          150
+        ],
+        [
+          200,
+          50,
+          90
+        ]
+      ],
+      "particles": 76,
+      "ring_count": 4,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "ProtoAsht's essence fused with Ashton's Aura.",
+      "sell_value": 25,
+      "xp_reward": 70
+    },
+    "m__christian__jamie": {
+      "id": "m__christian__jamie",
+      "name": "ProtoChri",
+      "rarity": 183,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          80,
+          200,
+          160
+        ],
+        [
+          255,
+          140,
+          100
+        ],
+        [
+          100,
+          240,
+          180
+        ],
+        [
+          255,
+          100,
+          80
+        ],
+        [
+          60,
+          160,
+          130
+        ],
+        [
+          200,
+          80,
+          60
+        ]
+      ],
+      "particles": 46,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "A blend of Christian's Aura and Jamie's Aura.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__brayden__brayden": {
+      "id": "m__brayden__brayden",
+      "name": "Brayden",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          180,
+          180,
+          200
+        ],
+        [
+          180,
+          180,
+          200
+        ],
+        [
+          140,
+          140,
+          170
+        ],
+        [
+          140,
+          140,
+          170
+        ],
+        [
+          100,
+          100,
+          140
+        ],
+        [
+          100,
+          100,
+          140
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "Brayden's Aura's essence fused with Brayden's Aura.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__romit__romit": {
+      "id": "m__romit__romit",
+      "name": "Romitromit",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          200,
+          190,
+          160
+        ],
+        [
+          200,
+          190,
+          160
+        ],
+        [
+          170,
+          160,
+          130
+        ],
+        [
+          170,
+          160,
+          130
+        ],
+        [
+          220,
+          210,
+          180
+        ],
+        [
+          220,
+          210,
+          180
+        ]
+      ],
+      "particles": 24,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Romit's Aura meets Romit's Aura.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__anthony__brenden": {
+      "id": "m__anthony__brenden",
+      "name": "Brendantho",
+      "rarity": 50,
+      "tier": "Common",
+      "colors": [
+        [
+          170,
+          180,
+          160
+        ],
+        [
+          180,
+          160,
+          200
+        ],
+        [
+          140,
+          155,
+          130
+        ],
+        [
+          150,
+          130,
+          175
+        ],
+        [
+          195,
+          205,
+          185
+        ],
+        [
+          200,
+          180,
+          220
+        ]
+      ],
+      "particles": 26,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Brenden's Aura meets Anthony's Aura.",
+      "sell_value": 5,
+      "xp_reward": 30
+    },
+    "m__varun__varun": {
+      "id": "m__varun__varun",
+      "name": "OmniVaru",
+      "rarity": 90,
+      "tier": "Common",
+      "colors": [
+        [
+          0,
+          180,
+          255
+        ],
+        [
+          0,
+          180,
+          255
+        ],
+        [
+          0,
+          220,
+          200
+        ],
+        [
+          0,
+          220,
+          200
+        ],
+        [
+          100,
+          240,
+          255
+        ],
+        [
+          100,
+          240,
+          255
+        ]
+      ],
+      "particles": 44,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when Varun's Aura meets Varun's Aura.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__james__varun": {
+      "id": "m__james__varun",
+      "name": "Jamestorm",
+      "rarity": 105,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          200,
+          160,
+          80
+        ],
+        [
+          0,
+          180,
+          255
+        ],
+        [
+          255,
+          200,
+          100
+        ],
+        [
+          0,
+          220,
+          200
+        ],
+        [
+          180,
+          130,
+          50
+        ],
+        [
+          100,
+          240,
+          255
+        ]
+      ],
+      "particles": 46,
+      "ring_count": 1,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "James's Aura's essence fused with Varun's Aura.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__ashton__christian": {
+      "id": "m__ashton__christian",
+      "name": "Ashtrift",
+      "rarity": 252,
+      "tier": "Uncommon",
+      "colors": [
+        [
+          255,
+          80,
+          120
+        ],
+        [
+          80,
+          200,
+          160
+        ],
+        [
+          255,
+          130,
+          150
+        ],
+        [
+          100,
+          240,
+          180
+        ],
+        [
+          200,
+          50,
+          90
+        ],
+        [
+          60,
+          160,
+          130
+        ]
+      ],
+      "particles": 48,
+      "ring_count": 3,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": true,
+      "description": "A blend of Ashton's Aura and Christian's Aura.",
+      "sell_value": 25,
+      "xp_reward": 50
+    },
+    "m__john__max": {
+      "id": "m__john__max",
+      "name": "Johnvoid",
+      "rarity": 95,
+      "tier": "Common",
+      "colors": [
+        [
+          160,
+          170,
+          180
+        ],
+        [
+          255,
+          200,
+          0
+        ],
+        [
+          130,
+          140,
+          155
+        ],
+        [
+          255,
+          230,
+          80
+        ],
+        [
+          190,
+          200,
+          210
+        ],
+        [
+          200,
+          155,
+          0
+        ]
+      ],
+      "particles": 36,
+      "ring_count": 2,
+      "pulse": true,
+      "lightning": false,
+      "star_burst": false,
+      "trail": false,
+      "description": "What happens when John's Aura meets Max's Aura.",
+      "sell_value": 5,
+      "xp_reward": 50
+    },
+    "m__bloodocean__deepocean": {
+      "id": "m__bloodocean__deepocean",
+      "name": "Bloostorm",
+      "rarity": 8533614,
+      "tier": "Godly",
+      "colors": [
+        [
+          200,
+          20,
+          20
+        ],
+        [
+          0,
+          40,
+          180
+        ],
+        [
+          0,
+          80,
+          200
+        ],
+        [
+          0,
+          160,
+          180
+        ],
+        [
+          255,
+          60,
+          40
+        ],
+        [
+          0,
+          80,
+          255
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": true,
+      "star_burst": true,
+      "trail": true,
+      "description": "What happens when Blood & Ocean meets Deep Ocean.",
+      "sell_value": 10000,
+      "xp_reward": 2220
+    },
+    "m__juno__m__bloodocean__deepocean": {
+      "id": "m__juno__m__bloodocean__deepocean",
+      "name": "Junoshade",
+      "rarity": 31373043,
+      "tier": "???",
+      "colors": [
+        [
+          220,
+          60,
+          255
+        ],
+        [
+          200,
+          20,
+          20
+        ],
+        [
+          255,
+          100,
+          200
+        ],
+        [
+          0,
+          40,
+          180
+        ],
+        [
+          140,
+          0,
+          255
+        ],
+        [
+          0,
+          80,
+          200
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": true,
+      "star_burst": true,
+      "trail": true,
+      "description": "Neither Juno's Aura nor Bloostorm, yet both.",
+      "sell_value": 50000,
+      "xp_reward": 2240
+    },
+    "m__juno__karna": {
+      "id": "m__juno__karna",
+      "name": "QuasiJuno",
+      "rarity": 15969837,
+      "tier": "Godly",
+      "colors": [
+        [
+          220,
+          60,
+          255
+        ],
+        [
+          255,
+          200,
+          0
+        ],
+        [
+          255,
+          100,
+          200
+        ],
+        [
+          255,
+          120,
+          0
+        ],
+        [
+          140,
+          0,
+          255
+        ],
+        [
+          255,
+          255,
+          100
+        ]
+      ],
+      "particles": 200,
+      "ring_count": 7,
+      "pulse": true,
+      "lightning": true,
+      "star_burst": true,
+      "trail": true,
+      "description": "Juno's Aura's essence fused with Karna's Aura.",
+      "sell_value": 10000,
+      "xp_reward": 1520
+    },
+    "m__juno__roy": {
+      "id": "m__juno__roy",
+      "name": "ArchJuno",
+      "rarity": 357520,
+      "tier": "Mythic",
+      "colors": [
+        [
+          220,
+          60,
+          255
+        ],
+        [
+          220,
+          40,
+          40
+        ],
+        [
+          255,
+          100,
+          200
+        ],
+        [
+          255,
+          80,
+          60
+        ],
+        [
+          140,
+          0,
+          255
+        ],
+        [
+          160,
+          20,
+          20
+        ]
+      ],
+      "particles": 156,
+      "ring_count": 6,
+      "pulse": true,
+      "lightning": true,
+      "star_burst": true,
+      "trail": true,
+      "description": "Neither Juno's Aura nor Roy's Aura, yet both.",
+      "sell_value": 1000,
+      "xp_reward": 1520
+    }
+  },
+  "merged_inventory": {
+    "melt": 0,
+    "blizzard": 0,
+    "m__blizzard__melt": 0,
+    "m__arctic__thunder": 0,
+    "m__arctic__m__arctic__thunder": 0,
+    "m__m__arctic__m__arctic__thunder__rose": 0,
+    "m__m__m__arctic__m__arctic__thunder__rose__rose": 0,
+    "m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose": 0,
+    "m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud": 0,
+    "m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud": 0,
+    "m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose": 0,
+    "m__m__blizzard__melt__smoke": 0,
+    "m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose": 0,
+    "m__m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose__rose": 0,
+    "m__m__m__m__m__blizzard__melt__smoke__m__m__ember__m__m__m__m__m__arctic__m__arctic__thunder__rose__rose__rose__mud__rose__rose__mud": 0,
+    "m__aqua__shadow": 0,
+    "m__aqua__sand": 0,
+    "m__m__aqua__sand__m__aqua__shadow": 0,
+    "m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow": 0,
+    "m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow": 0,
+    "m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow": 0,
+    "m__inferno__thunder": 0,
+    "m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder": 0,
+    "m__smoke__smoke": 0,
+    "m__sand__sand": 0,
+    "m__aqua__aqua": 0,
+    "m__m__aqua__aqua__m__sand__sand": 0,
+    "m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke": 0,
+    "m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke": 0,
+    "m__leaf__shadow": 0,
+    "m__leaf__leaf": 0,
+    "m__m__leaf__leaf__m__leaf__shadow": 0,
+    "m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow": 0,
+    "m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke": 0,
+    "m__ember__ember": 0,
+    "m__m__ember__ember__m__ember__ember": 0,
+    "m__m__leaf__shadow__m__m__ember__ember__m__ember__ember": 0,
+    "m__frost__frost": 0,
+    "m__m__frost__frost__m__frost__frost": 0,
+    "m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": 0,
+    "m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": 0,
+    "m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": 0,
+    "m__m__m__frost__frost__m__frost__frost__shadow": 0,
+    "m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow": 0,
+    "m__melt__melt": 0,
+    "m__m__ember__ember__m__m__ember__ember__m__ember__ember": 0,
+    "m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow": 0,
+    "m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow": 0,
+    "m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": 0,
+    "m__salvage_aura__void": 0,
+    "m__m__melt__melt__m__salvage_aura__void": 0,
+    "m__melt__miner_aura": 0,
+    "m__crystal__phantom": 0,
+    "m__crystal__m__crystal__phantom": 0,
+    "m__m__crystal__m__crystal__phantom__m__melt__miner_aura": 0,
+    "m__lunar__lunar": 0,
+    "m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost": 0,
+    "m__m__m__crystal__m__crystal__phantom__m__melt__miner_aura__m__m__melt__melt__m__salvage_aura__void": 1,
+    "m__shadow__shadow": 0,
+    "m__venom__venom": 0,
+    "m__lava__lava": 0,
+    "m__arctic__arctic": 0,
+    "m__m__lava__lava__m__lava__lava": 0,
+    "m__inferno__inferno": 0,
+    "m__m__venom__venom__m__venom__venom": 0,
+    "m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom": 0,
+    "m__m__arctic__arctic__m__inferno__inferno": 0,
+    "m__arctic__m__m__arctic__arctic__m__inferno__inferno": 0,
+    "m__m__inferno__inferno__m__inferno__inferno": 0,
+    "m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno": 0,
+    "m__inferno__m__inferno__inferno": 0,
+    "m__m__inferno__m__inferno__inferno__thunder": 0,
+    "m__m__m__inferno__m__inferno__inferno__thunder__thunder": 0,
+    "m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder": 0,
+    "m__thunder__thunder": 0,
+    "m__m__thunder__thunder__m__thunder__thunder": 0,
+    "m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder": 0,
+    "m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder": 0,
+    "m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder": 0,
+    "m__rose__rose": 0,
+    "m__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder": 0,
+    "m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__rose__rose__m__rose__rose__m__rose__rose": 0,
+    "m__m__ember__ember__m__frost__frost": 0,
+    "m__m__shadow__shadow__m__shadow__shadow": 0,
+    "m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow": 0,
+    "m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow": 0,
+    "m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": 0,
+    "m__mud__mud": 1,
+    "m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost__m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose": 0,
+    "m__m__m__m__lunar__lunar__m__m__m__leaf__leaf__m__m__m__ember__ember__m__m__ember__ember__m__ember__ember__m__m__leaf__leaf__m__m__m__frost__frost__m__frost__frost__shadow__m__m__m__m__aqua__shadow__m__m__leaf__leaf__m__leaf__shadow__m__m__m__aqua__m__m__aqua__sand__m__m__aqua__sand__m__m__aqua__sand__m__aqua__shadow__m__inferno__thunder__m__m__m__aqua__aqua__m__sand__sand__m__smoke__smoke__m__m__m__leaf__shadow__m__m__ember__ember__m__ember__ember__m__m__m__frost__frost__m__frost__frost__m__m__frost__frost__m__frost__frost__m__m__m__m__lava__lava__m__lava__lava__m__m__venom__venom__m__venom__venom__m__m__m__m__arctic__m__m__arctic__arctic__m__inferno__inferno__m__m__inferno__inferno__m__inferno__inferno__m__m__m__m__m__inferno__m__inferno__inferno__thunder__thunder__thunder__m__m__m__thunder__thunder__m__thunder__thunder__m__m__thunder__thunder__m__thunder__thunder__m__m__m__m__m__m__ember__ember__m__frost__frost__m__m__shadow__shadow__m__shadow__shadow__m__m__shadow__shadow__m__shadow__shadow__m__m__m__rose__rose__m__rose__rose__m__rose__rose__m__m__m__m__m__rose__rose__m__rose__rose__m__m__rose__rose__m__rose__rose__m__thunder__thunder__m__m__rose__rose__m__rose__rose__storm": 1,
+    "m__ashton__max": 0,
+    "m__arman__swan": 0,
+    "m__m__arman__swan__melt": 1,
+    "m__ashton__m__ashton__max": 1,
+    "m__christian__jamie": 1,
+    "m__brayden__brayden": 5,
+    "m__romit__romit": 1,
+    "m__anthony__brenden": 1,
+    "m__varun__varun": 1,
+    "m__james__varun": 1,
+    "m__ashton__christian": 1,
+    "m__john__max": 1,
+    "m__bloodocean__deepocean": 0,
+    "m__juno__m__bloodocean__deepocean": 1,
+    "m__juno__karna": 1,
+    "m__juno__roy": 1
+  },
+  "equipped_id": "solarkings",
+  "active_enchantment": "gay",
+  "total_coins_earned": 401163,
+  "total_sold": 95,
+  "total_merges": 163,
+  "best_aura_id": "tsunami",
+  "pity_rare": 48,
+  "pity_epic": 48,
+  "pity_legendary": 48,
+  "pity_mythic": 48,
+  "quests": [
+    {
+      "id": "roll10",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "roll100",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "roll1000",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "uncommon",
+      "progress": 5,
+      "completed": true
+    },
+    {
+      "id": "rare",
+      "progress": 3,
+      "completed": true
+    },
+    {
+      "id": "epic",
+      "progress": 1,
+      "completed": true
+    },
+    {
+      "id": "collect5",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "collect10",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "sell10",
+      "progress": 10,
+      "completed": true
+    },
+    {
+      "id": "combo3",
+      "progress": 1,
+      "completed": true
+    },
+    {
+      "id": "merge1",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "merge10",
+      "progress": 0,
+      "completed": true
+    },
+    {
+      "id": "enchant1",
+      "progress": 0,
+      "completed": false
+    }
+  ]
+}
