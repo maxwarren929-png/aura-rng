@@ -148,6 +148,39 @@ class ApiClient {
   async syncState(state) {
     return this._req('POST', '/game/save', { state });
   }
+
+  // Battle (NormArena)
+  async getBattleChallenges() {
+    return this._req('GET', '/battle/challenges');
+  }
+
+  async sendBattleChallenge(opponentUsername, teamIds) {
+    return this._req('POST', '/battle/challenge', { opponent_username: opponentUsername, team: teamIds });
+  }
+
+  async acceptBattleChallenge(challengeId, teamIds) {
+    return this._req('POST', `/battle/challenge/${challengeId}/accept`, { team: teamIds });
+  }
+
+  async declineBattleChallenge(challengeId) {
+    return this._req('POST', `/battle/challenge/${challengeId}/decline`);
+  }
+
+  async getBattleState(battleId) {
+    return this._req('GET', `/battle/${battleId}`);
+  }
+
+  async makeBattleMove(battleId, moveId) {
+    return this._req('POST', `/battle/${battleId}/move`, { moveId });
+  }
+
+  async switchBattleAura(battleId, auraIdx) {
+    return this._req('POST', `/battle/${battleId}/switch`, { auraIdx });
+  }
+
+  async forfeitBattle(battleId) {
+    return this._req('POST', `/battle/${battleId}/forfeit`);
+  }
 }
 
 export const API = new ApiClient();

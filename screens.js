@@ -1,6 +1,7 @@
-// screens.js — All HTML-based screen renderers (shop, collection, merge, enchant, quests, stats)
+// screens.js — All HTML-based screen renderers
 import { TIER_COLORS, TIER_ORDER, tierRank, rarityStr, cssColor, ALL_AURAS, AURA_BY_ID } from './auras.js';
 import { ALL_ENCHANTMENTS, ENCHANTMENT_BY_ID } from './enchantments.js';
+import { MOVE_DEFS, getAuraStats, getAuraMoves } from './battle.js';
 
 function tc(tier) { return cssColor(TIER_COLORS[tier] || [200,200,200]); }
 
@@ -265,22 +266,246 @@ export function renderCollection(container, gs, onEquip, onSell) {
   };
 }
 
-// ── MERGE ─────────────────────────────────────────────────────────────────────
-export function renderMergeGrid(container, gs, onSelect) {
-  const coll = gs.collection();
-  if (!coll.length) { container.innerHTML = '<div style="color:#6070a0;padding:20px">No auras to merge yet.</div>'; return; }
-  const sorted = [...coll].sort((a,b) => b.rarity - a.rarity);
-  container.innerHTML = sorted.map(aura => {
-    const color = tc(aura.tier);
-    const count = gs.countOf(aura.id);
-    return `<div class="aura-card" onclick="window._mergeSelect('${aura.id}')" style="cursor:pointer">
-      <div style="display:flex;gap:3px">${aura.colors.slice(0,3).map(c=>`<div class="swatch" style="background:rgb(${c})"></div>`).join('')}</div>
-      <div class="name" style="color:${color};font-size:11px">${aura.name}</div>
-      <div style="font-size:10px;color:${color};opacity:.7">${aura.tier}</div>
-      ${count > 1 ? `<div style="font-size:10px;color:#00e5ff">×${count}</div>` : ''}
+// ── NORMARENA ────────────────────────────────────────────────────────────────
+
+function hpColor(pct) {
+  if (pct > 0.5) return '#44ff88';
+  if (pct > 0.25) return '#ffd700';
+  return '#ff5555';
+}
+
+function unitCard(unit, isActive, side) {
+  if (!unit) return '';
+  const color   = tc(unit.tier);
+  const pct     = unit.fainted ? 0 : unit.currentHp / unit.maxHp;
+  const hpPct   = Math.max(0, Math.floor(pct * 100));
+  const hpCol   = hpColor(pct);
+  const opacity = unit.fainted ? '0.35' : '1';
+  const border  = isActive ? `border:2px solid ${color}` : 'border:1px solid #2a2a4a';
+  const tag     = unit.fainted ? '<span style="font-size:9px;color:#ff5555;margin-left:4px">FAINTED</span>'
+    : (isActive ? '<span style="font-size:9px;color:#ffd700;margin-left:4px">ACTIVE</span>' : '');
+  const statusTag = unit.status === 'invincible'
+    ? '<span style="font-size:9px;color:#00e5ff;margin-left:4px">INVISIBLE</span>' : '';
+  return `<div style="background:#0d0d22;border-radius:8px;padding:8px 10px;min-width:130px;flex:1;opacity:${opacity};${border}">
+    <div style="font-weight:700;font-size:12px;color:${color}">${unit.name}${tag}${statusTag}</div>
+    <div style="font-size:10px;color:#6070a0">★ ${unit.tier}</div>
+    <div style="margin:4px 0 2px;background:#12122a;border-radius:4px;height:8px;overflow:hidden">
+      <div style="width:${hpPct}%;height:100%;background:${hpCol};transition:width .3s"></div>
+    </div>
+    <div style="font-size:10px;color:${hpCol}">${unit.fainted ? 'Fainted' : `${unit.currentHp}/${unit.maxHp} HP`}</div>
+    <div style="font-size:9px;color:#6070a0;margin-top:2px">ATK×${unit.atkMod.toFixed(1)} DEF×${unit.defMod.toFixed(1)} SPD ${Math.round(unit.baseSpd*unit.spdMod)}</div>
+  </div>`;
+}
+
+export function renderNormArena(root, gs, arenaState, handlers) {
+  if (!root) return;
+  const { phase, battle, team, onlineBattle } = arenaState;
+
+  if (phase === 'teamSelect') {
+    renderTeamSelect(root, gs, team, handlers);
+  } else if (phase === 'battle' || phase === 'needsSwitch') {
+    renderBattle(root, battle, gs, arenaState, handlers);
+  } else if (phase === 'ended') {
+    renderBattleEnd(root, battle, handlers);
+  } else if (phase === 'onlineLobby') {
+    renderOnlineLobby(root, gs, arenaState, handlers);
+  }
+}
+
+function renderTeamSelect(root, gs, team, handlers) {
+  const coll = gs.collection().sort((a, b) => b.rarity - a.rarity);
+
+  const slotHTML = team.map((id, i) => {
+    const a = id ? gs.getAura(id) : null;
+    const color = a ? tc(a.tier) : '#6070a0';
+    return `<div style="background:#0d0d22;border:2px solid ${a ? color : '#2a2a4a'};border-radius:8px;padding:8px;min-width:100px;text-align:center;cursor:pointer"
+      onclick="window._arenaRemoveSlot(${i})">
+      ${a ? `<div style="display:flex;gap:3px;justify-content:center;margin-bottom:4px">
+        ${a.colors.slice(0,3).map(c=>`<div style="width:8px;height:8px;border-radius:50%;background:rgb(${c})"></div>`).join('')}
+      </div>
+      <div style="font-size:11px;font-weight:700;color:${color}">${a.name}</div>
+      <div style="font-size:9px;color:${color};opacity:.7">${a.tier}</div>
+      <div style="font-size:9px;color:#ff5555;margin-top:2px">✕ Remove</div>`
+      : `<div style="font-size:24px;color:#2a2a4a">⚔️</div><div style="font-size:10px;color:#6070a0">Slot ${i+1}</div>`}
     </div>`;
   }).join('');
-  window._mergeSelect = onSelect;
+
+  const canBattle = team.filter(Boolean).length > 0;
+  const collHTML = coll.map(aura => {
+    const color    = tc(aura.tier);
+    const selected = team.includes(aura.id);
+    const stats    = getAuraStats(aura);
+    const moves    = getAuraMoves(aura).map(id => MOVE_DEFS[id]?.name || id).join(', ');
+    return `<div class="aura-card ${selected ? 'equipped-badge' : ''}"
+      onclick="window._arenaPickAura('${aura.id}')"
+      style="cursor:pointer;${selected ? 'border-color:#ffd700;opacity:.6' : ''}">
+      <div style="display:flex;gap:3px;justify-content:center">
+        ${aura.colors.slice(0,4).map(c=>`<div class="swatch" style="background:rgb(${c})"></div>`).join('')}
+      </div>
+      <div class="name" style="color:${color};font-size:11px">${aura.name}</div>
+      <div style="font-size:9px;color:${color};opacity:.7">★ ${aura.tier}</div>
+      <div style="font-size:9px;color:#6070a0;margin-top:3px">HP ${stats.hp} ATK ${stats.atk} DEF ${stats.def} SPD ${stats.spd}</div>
+      <div style="font-size:8px;color:#6070a0;margin-top:2px;word-break:break-word">${moves}</div>
+      ${selected ? '<div style="font-size:9px;color:#ffd700;margin-top:2px">✓ In team</div>' : ''}
+    </div>`;
+  }).join('');
+
+  root.innerHTML = `
+  <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:12px;font-size:18px">⚔️ NormArena</h2>
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-size:12px;color:#6070a0;margin-bottom:8px">Select up to 3 Auras for your team (click to add, click slot to remove):</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">${slotHTML}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn green" ${canBattle ? '' : 'disabled'} onclick="window._arenaStartAI()" style="opacity:${canBattle?1:.4}">⚔️ Battle AI</button>
+      <button class="btn purple" ${canBattle ? '' : 'disabled'} onclick="window._arenaOpenOnline()" style="opacity:${canBattle?1:.4}">🌐 Challenge Player</button>
+    </div>
+  </div>
+  ${coll.length ? `<div id="arena-select-grid">${collHTML}</div>`
+    : '<div style="color:#6070a0;padding:20px;text-align:center">Roll some auras first!</div>'}`;
+
+  window._arenaPickAura   = handlers.pickAura;
+  window._arenaRemoveSlot = handlers.removeSlot;
+  window._arenaStartAI    = handlers.startAI;
+  window._arenaOpenOnline = handlers.openOnline;
+}
+
+function renderBattle(root, battle, gs, arenaState, handlers) {
+  if (!battle) { root.innerHTML = ''; return; }
+
+  const p = battle.player;
+  const o = battle.opponent;
+  const pa = p.units[p.activeIdx];
+  const oa = o.units[o.activeIdx];
+
+  const opTeamHTML = o.units.map((u, i) => unitCard(u, i === o.activeIdx, 'opp')).join('');
+  const plTeamHTML = p.units.map((u, i) => unitCard(u, i === p.activeIdx, 'pl')).join('');
+
+  // Log (show last 6 lines)
+  const logLines = battle.log.slice(-6).map(l => `<div style="font-size:11px;color:#9090b0;padding:1px 0">${l}</div>`).join('');
+
+  let actionsHTML = '';
+  if (battle.phase === 'battle') {
+    if (arenaState.phase === 'needsSwitch' || battle.needsPlayerSwitch) {
+      // Forced switch UI
+      actionsHTML = `<div style="font-size:13px;color:#ff5555;margin-bottom:8px;font-weight:700">Your ${pa.name} fainted! Choose your next Aura:</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${p.units.map((u, i) => !u.fainted && i !== p.activeIdx
+            ? `<button class="btn green" onclick="window._arenaSwitch(${i})" style="font-size:12px">${u.name}</button>`
+            : '').join('')}
+        </div>`;
+    } else if (battle.isPlayerTurn) {
+      // Move buttons
+      const moves = pa.moves.map(id => MOVE_DEFS[id]).filter(Boolean);
+      const moveBtns = moves.map(m => {
+        const typeColor = m.type === 'damage' ? '#ff6060' : m.type === 'heal' ? '#44ff88' : m.type === 'stat' ? '#00e5ff' : '#ffd700';
+        return `<button onclick="window._arenaMove('${m.id}')"
+          style="flex:1;min-width:120px;padding:8px 6px;border-radius:8px;border:1px solid ${typeColor};
+          background:#0a0a20;color:${typeColor};cursor:pointer;font-size:11px;font-weight:700;text-align:left">
+          <div style="font-weight:700">${m.name}</div>
+          <div style="font-size:9px;opacity:.75;margin-top:2px">${m.desc}</div>
+        </button>`;
+      }).join('');
+
+      // Switch options
+      const switchBtns = p.units.map((u, i) => !u.fainted && i !== p.activeIdx
+        ? `<button class="btn" onclick="window._arenaSwitch(${i})" style="font-size:11px">${u.name}</button>` : '').join('');
+
+      actionsHTML = `
+        <div style="font-size:11px;color:#ffd700;font-weight:700;margin-bottom:6px">Your Turn — ${pa.name}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${moveBtns}</div>
+        ${switchBtns ? `<div style="font-size:10px;color:#6070a0;margin-bottom:4px">Or switch:</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">${switchBtns}</div>` : ''}`;
+    } else {
+      actionsHTML = `<div style="font-size:13px;color:#6070a0;font-style:italic">Opponent is acting…</div>`;
+    }
+  }
+
+  root.innerHTML = `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:16px;margin:0">⚔️ NormArena</h2>
+    <button class="btn red" style="font-size:11px" onclick="window._arenaForfeit()">Forfeit</button>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#ff6060;letter-spacing:1px;margin-bottom:4px">${battle.opponentName.toUpperCase()}</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${opTeamHTML}</div>
+
+  <div style="font-size:11px;font-weight:700;color:#44ff88;letter-spacing:1px;margin-bottom:4px">${battle.playerName.toUpperCase()}</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${plTeamHTML}</div>
+
+  <div class="card" style="margin-bottom:10px;max-height:110px;overflow-y:auto;padding:8px 10px">
+    ${logLines || '<div style="color:#6070a0;font-size:11px">Battle started…</div>'}
+  </div>
+
+  <div class="card" style="padding:10px">${actionsHTML}</div>`;
+
+  window._arenaMove    = handlers.useMove;
+  window._arenaSwitch  = handlers.switchAura;
+  window._arenaForfeit = handlers.forfeit;
+}
+
+function renderBattleEnd(root, battle, handlers) {
+  if (!battle) { root.innerHTML = ''; return; }
+  const won = battle.winner === 'player';
+  const color = won ? '#44ff88' : '#ff5555';
+  const lastLogs = battle.log.slice(-8).map(l => `<div style="font-size:11px;color:#9090b0;padding:1px 0">${l}</div>`).join('');
+  root.innerHTML = `
+  <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:16px;font-size:18px">⚔️ NormArena</h2>
+  <div class="card" style="text-align:center;margin-bottom:16px">
+    <div style="font-size:48px;margin-bottom:8px">${won ? '🏆' : '💀'}</div>
+    <div style="font-size:22px;font-weight:900;color:${color};font-family:'Cinzel Decorative',serif">
+      ${won ? 'VICTORY!' : 'DEFEAT'}
+    </div>
+    <div style="font-size:13px;color:#6070a0;margin-top:6px">
+      ${won ? `${battle.opponentName} was defeated.` : `${battle.playerName} was defeated.`}
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:16px;max-height:160px;overflow-y:auto;padding:8px 10px">${lastLogs}</div>
+  <button class="btn green" style="font-size:14px;padding:10px 24px" onclick="window._arenaReset()">Play Again</button>`;
+
+  window._arenaReset = handlers.reset;
+}
+
+function renderOnlineLobby(root, gs, arenaState, handlers) {
+  const pending = arenaState.pendingChallenges || [];
+  const pendingHTML = pending.length
+    ? pending.map(c => `<div class="trade-card" style="margin-bottom:6px">
+        <div class="trade-meta">
+          <div style="font-weight:700;color:#00e5ff">Challenge from ${escHtml(c.challenger_name)}</div>
+          <div style="font-size:11px;color:#6070a0">Team: ${c.team_preview || '???'}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn green" style="font-size:11px" onclick="window._arenaAccept(${c.id})">Accept</button>
+          <button class="btn red"   style="font-size:11px" onclick="window._arenaDecline(${c.id})">Decline</button>
+        </div>
+      </div>`).join('')
+    : '<div style="color:#6070a0;font-size:12px">No pending challenges.</div>';
+
+  root.innerHTML = `
+  <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:12px;font-size:18px">⚔️ NormArena — Online</h2>
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-size:12px;color:#6070a0;margin-bottom:8px">Challenge another player by username:</div>
+    <div style="display:flex;gap:8px">
+      <input id="arena-challenge-input" type="text" placeholder="Username" maxlength="30" style="flex:1" />
+      <button class="btn green" onclick="window._arenaSendChallenge()">Send Challenge</button>
+    </div>
+    <div id="arena-challenge-err" style="color:#ff5555;font-size:11px;margin-top:4px"></div>
+  </div>
+  <div style="font-size:11px;font-weight:700;color:#6070a0;letter-spacing:1px;margin-bottom:6px">INCOMING CHALLENGES</div>
+  ${pendingHTML}
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn" onclick="window._arenaRefreshLobby()">🔄 Refresh</button>
+    <button class="btn" onclick="window._arenaBackToTeam()">← Back</button>
+  </div>`;
+
+  window._arenaSendChallenge = () => {
+    const val = document.getElementById('arena-challenge-input')?.value.trim();
+    if (val) handlers.sendChallenge(val);
+    else document.getElementById('arena-challenge-err').textContent = 'Enter a username.';
+  };
+  window._arenaAccept       = handlers.acceptChallenge;
+  window._arenaDecline      = handlers.declineChallenge;
+  window._arenaRefreshLobby = handlers.refreshLobby;
+  window._arenaBackToTeam   = handlers.backToTeam;
 }
 
 // ── ENCHANT ───────────────────────────────────────────────────────────────────
@@ -400,7 +625,7 @@ export function renderStats(container, gs) {
           ['Crit Chance', `Lv${gs.critLevel} (${(gs.critChance*100).toFixed(0)}%)`],
           ['Multi-Roll', `×${gs.multiRoll}`],
           ['Auto-Roll', gs.autoRoll ? '🟢 ON' : '🔴 OFF'],
-          ['Total Merges', gs.totalMerges.toLocaleString()],
+          ['Arena Wins', gs.totalBattleWins.toLocaleString()],
         ].map(([k,v])=>`<div class="stat-row"><span style="color:#6070a0">${k}</span><span style="font-weight:700">${v}</span></div>`).join('')}
       </div>
       ${bestAura ? `<div class="card">
