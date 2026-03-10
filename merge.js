@@ -1,5 +1,5 @@
 // merge.js — Aura merging system
-import { AuraDef, ALL_AURAS, AURA_BY_ID, TIER_ORDER, tierRank } from './auras.js';
+import { ALL_AURAS, AURA_BY_ID, TIER_ORDER, tierRank } from './auras.js';
 
 // ── Named recipes ─────────────────────────────────────────────────────────────
 function R(a, b, result) { return [JSON.stringify([a,b].sort()), result]; }
