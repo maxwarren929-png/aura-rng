@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨ Aura Roller — Ultimate Edition</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- Tab bar -->
+  <div id="tabbar">
+    <button class="tab active" data-tab="game">🎲 Roll</button>
+    <button class="tab" data-tab="shop">🛒 Shop</button>
+    <button class="tab" data-tab="collection">💎 Collection</button>
+    <button class="tab" data-tab="merge">⚗️ Merge</button>
+    <button class="tab" data-tab="enchant">✨ Enchant</button>
+    <button class="tab" data-tab="quests">📋 Quests</button>
+    <button class="tab" data-tab="stats">📊 Stats</button>
+    <div id="hud-right">
+      <div id="hud-coins">🪙 500</div>
+      <div id="hud-sub">Lv1 · 0 rolls</div>
+    </div>
+  </div>
+
+  <!-- Screens -->
+  <div id="screens">
+
+    <!-- GAME (canvas) -->
+    <div class="screen active" id="screen-game">
+      <canvas id="gc"></canvas>
+    </div>
+
+    <!-- SHOP -->
+    <div class="screen" id="screen-shop">
+      <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:14px;font-size:18px">🛒 Upgrade Shop</h2>
+      <div id="shop-list"></div>
+    </div>
+
+    <!-- COLLECTION -->
+    <div class="screen" id="screen-collection">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:18px">💎 Collection</h2>
+        <span id="coll-count" style="color:#6070a0;font-size:13px"></span>
+      </div>
+      <div id="coll-grid"></div>
+    </div>
+
+    <!-- MERGE -->
+    <div class="screen" id="screen-merge">
+      <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:12px;font-size:18px">⚗️ Merge Auras</h2>
+      <div class="card" style="margin-bottom:12px">
+        <p style="color:#6070a0;font-size:13px;margin-bottom:10px">
+          Select two auras from your collection below to merge into a new one. Same aura needs 2 copies.
+        </p>
+        <div id="merge-slots">
+          <div class="merge-slot" id="merge-slot-a" onclick="UI.mergeSlotClick('a')">
+            <span style="font-size:28px">⚗️</span><span>Slot A</span>
+          </div>
+          <div style="font-size:28px;color:#b450ff;padding:0 4px">+</div>
+          <div class="merge-slot" id="merge-slot-b" onclick="UI.mergeSlotClick('b')">
+            <span style="font-size:28px">⚗️</span><span>Slot B</span>
+          </div>
+          <div style="font-size:24px;color:#6070a0;padding:0 4px">→</div>
+          <div style="text-align:center;color:#6070a0;font-size:12px;min-width:100px" id="merge-preview">?</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:6px">
+          <button class="btn purple" onclick="UI.doMerge()">⚗️ Merge!</button>
+          <button class="btn" onclick="UI.mergeClear()">Clear</button>
+        </div>
+      </div>
+      <div id="merge-grid"></div>
+    </div>
+
+    <!-- ENCHANT -->
+    <div class="screen" id="screen-enchant">
+      <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:12px;font-size:18px">✨ Enchantments</h2>
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-size:12px;color:#6070a0">Active enchantment:</div>
+        <div id="enc-active-display" style="margin-top:6px;font-weight:700;font-size:14px">None</div>
+        <button class="btn red" style="margin-top:8px;font-size:12px" onclick="UI.removeEnchant()">Remove Enchantment (free)</button>
+      </div>
+      <div id="enc-list"></div>
+    </div>
+
+    <!-- QUESTS -->
+    <div class="screen" id="screen-quests">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:18px">📋 Quests</h2>
+        <span id="quest-count" style="color:#6070a0;font-size:13px"></span>
+      </div>
+      <div id="quests-list"></div>
+    </div>
+
+    <!-- STATS -->
+    <div class="screen" id="screen-stats">
+      <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:14px;font-size:18px">📊 Stats</h2>
+      <div id="stats-content"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Notifications -->
+<div id="notifs"></div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
