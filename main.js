@@ -115,6 +115,7 @@ function refreshScreen(tab) {
 let _bootPhase = 'connecting';
 let _bootRetryTimer = null;
 let _bootAuthMode = 'login';
+let _bootAttempts = 0;
 
 function showBoot(phase) {
   _bootPhase = phase;
@@ -131,14 +132,23 @@ function hideBoot() {
 
 async function boot() {
   if (_bootRetryTimer) { clearTimeout(_bootRetryTimer); _bootRetryTimer = null; }
-  showBoot('connecting');
+  if (_bootAttempts === 0) showBoot('connecting');
+  _bootAttempts++;
+
+  // Show progress while waiting for cold start (~30-50s on Render free tier)
+  const subEl = document.querySelector('#boot-connecting .boot-sub');
+  if (subEl) subEl.textContent = _bootAttempts === 1 ? 'Connecting to server…' : `Server starting up… (${_bootAttempts * 5}s)`;
+
   try {
     await API._req('GET', '/health');
   } catch {
-    showBoot('error');
+    // Only show hard error after ~40s; keep spinner while server cold-starts
+    if (_bootAttempts >= 8) showBoot('error');
     _bootRetryTimer = setTimeout(() => boot(), 5000);
     return;
   }
+
+  _bootAttempts = 0;
   API.init();
   if (!API.loggedIn) { showBoot('auth'); return; }
   showBoot('loading');
