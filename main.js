@@ -1,6 +1,6 @@
 // main.js — Game loop, canvas rendering, tab management
 import { GameState } from './state.js';
-import { TIER_COLORS, tierRank, rarityStr, cssColor, AURA_BY_ID } from './auras.js';
+import { TIER_COLORS, tierRank, rarityStr, cssColor, AURA_BY_ID, ALL_AURAS } from './auras.js';
 import { ParticleSystem, LightningBolt, ScreenShake, drawCharacter, drawAuraFull, rgb } from './effects.js';
 import { renderShop, renderCollection, renderMergeGrid, renderEnchant, renderQuests, renderStats } from './screens.js';
 import { ENCHANTMENT_BY_ID } from './enchantments.js';
@@ -119,7 +119,7 @@ function animateNext() {
   if (!rollQueue.length) return;
   rollAnimating = true;
   const result = rollQueue[0];
-  rollAnim = { aura: result.aura, isNew: result.firstTime, coins: result.coins, xp: result.xp, phase: 'reveal', timer: 0, done: false };
+  rollAnim = { aura: result.aura, isNew: result.firstTime, coins: result.coins, xp: result.xp, phase: 'spin', timer: 0, done: false, spinIdx: 0, spinTick: 0 };
   particles.clear();
   bolts = [];
 }
@@ -268,8 +268,87 @@ function drawRollAnim(dt, cx, cy) {
   const a = rollAnim;
   a.timer += dt;
 
-  // Phases: reveal (0-0.5s), show (0.5-2.5s), done
-  if (a.phase === 'reveal') {
+  // Phases: spin (0-1.5s), reveal (0-0.5s), show (0.5-2.5s), done
+  if (a.phase === 'spin') {
+    const SPIN_DUR = 1.5;
+    const prog = Math.min(1, a.timer / SPIN_DUR);
+
+    // Advance spin index — starts fast, slows toward end
+    const tickRate = 0.04 + prog * prog * 0.28;
+    a.spinTick += dt;
+    if (a.spinTick >= tickRate) {
+      a.spinTick = 0;
+      a.spinIdx = (a.spinIdx + 1) % ALL_AURAS.length;
+    }
+
+    // Near the end, lock onto the actual aura
+    const lockOn = prog > 0.88;
+    const showAura = lockOn ? a.aura : ALL_AURAS[a.spinIdx];
+    const tc2 = TIER_COLORS[showAura.tier] || [200,200,200];
+
+    // Background tint
+    ctx.fillStyle = `rgba(${showAura.colors[0][0]},${showAura.colors[0][1]},${showAura.colors[0][2]},0.07)`;
+    ctx.fillRect(0, 0, W, H);
+
+    // Slot box
+    const boxW = 360, boxH = 200;
+    const boxX = W/2 - boxW/2, boxY = H/2 - boxH/2 - 30;
+
+    ctx.fillStyle = 'rgba(8,8,24,0.95)';
+    roundRect(ctx, boxX, boxY, boxW, boxH, 16); ctx.fill();
+
+    // Animated border pulse
+    const borderA = lockOn ? 0.9 : (0.4 + 0.4*Math.sin(a.timer * (18 - prog*14)));
+    ctx.strokeStyle = `rgba(${tc2[0]},${tc2[1]},${tc2[2]},${borderA})`;
+    ctx.lineWidth = 3;
+    roundRect(ctx, boxX, boxY, boxW, boxH, 16); ctx.stroke();
+
+    // Color swatches
+    const colors = showAura.colors.slice(0, 5);
+    const swatchR = 12;
+    const totalSW = colors.length * (swatchR*2 + 8) - 8;
+    colors.forEach((c, i) => {
+      ctx.beginPath();
+      ctx.arc(W/2 - totalSW/2 + swatchR + i*(swatchR*2+8), boxY + 52, swatchR, 0, Math.PI*2);
+      ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
+      ctx.fill();
+    });
+
+    // Tier label
+    ctx.fillStyle = `rgba(${tc2[0]},${tc2[1]},${tc2[2]},${0.7 + 0.3*Math.sin(a.timer*8)})`;
+    ctx.font = 'bold 13px "Exo 2"';
+    ctx.textAlign = 'center';
+    ctx.fillText(`★ ${showAura.tier.toUpperCase()} ★`, W/2, boxY + 100);
+
+    // Aura name
+    ctx.fillStyle = lockOn ? '#e8eeff' : `rgba(232,238,255,0.75)`;
+    ctx.font = 'bold 20px "Cinzel Decorative"';
+    ctx.fillText(showAura.name, W/2, boxY + 135);
+
+    // Rolling indicator
+    if (!lockOn) {
+      const dots = '.'.repeat((Math.floor(a.timer * 6) % 4));
+      ctx.fillStyle = 'rgba(180,200,255,0.8)';
+      ctx.font = 'bold 14px "Exo 2"';
+      ctx.fillText(`ROLLING${dots}`, W/2, boxY + 170);
+    } else {
+      ctx.fillStyle = `rgba(${tc2[0]},${tc2[1]},${tc2[2]},0.9)`;
+      ctx.font = 'bold 14px "Exo 2"';
+      ctx.fillText('...', W/2, boxY + 170);
+    }
+
+    // Faint character in background
+    ctx.save(); ctx.globalAlpha = 0.25;
+    drawCharacter(ctx, cx, cy, 1.0);
+    ctx.restore();
+
+    if (a.timer >= SPIN_DUR) {
+      a.phase = 'reveal';
+      a.timer = 0;
+      particles.clear();
+    }
+
+  } else if (a.phase === 'reveal') {
     if (a.timer < 0.5) {
       const prog = a.timer / 0.5;
       // Flash in
@@ -432,9 +511,24 @@ function drawStatsSidebar(dt) {
   ctx.fillStyle = '#00e5ff';
   ctx.fillText(`Luck: ×${gs.luckMult.toFixed(2)}`, sx, 182);
 
+  if (gs.auraLuckBonus > 1.0) {
+    ctx.fillStyle = '#80ffb0';
+    ctx.font = '11px "Exo 2"';
+    ctx.fillText(`Aura bonus: ×${gs.auraLuckBonus.toFixed(2)}`, sx, 196);
+  }
+
+  const critY = gs.auraLuckBonus > 1.0 ? 210 : 196;
+  if (gs.critLevel > 0) {
+    ctx.fillStyle = '#ffd700';
+    ctx.font = '11px "Exo 2"';
+    ctx.fillText(`💥 Crit: ${(gs.critChance*100).toFixed(0)}%`, sx, critY);
+  }
+
+  const potionY = critY + (gs.critLevel > 0 ? 14 : 0);
   if (gs.potionActive) {
     ctx.fillStyle = '#b450ff';
-    ctx.fillText(`🧪 Potion: ${gs.potionRollsLeft} left`, sx, 202);
+    ctx.font = '13px "Exo 2"';
+    ctx.fillText(`🧪 Potion: ${gs.potionRollsLeft} left`, sx, potionY + 6);
   }
 
   if (gs.activeEnchantment) {
@@ -631,6 +725,7 @@ function wrapText(ctx, text, x, y, maxW, lineH, align='center') {
 
 // ── Input ─────────────────────────────────────────────────────────────────────
 canvas.addEventListener('click', e => {
+  if (rollAnim && rollAnim.phase === 'spin' && rollAnim.timer > 0.3) { rollAnim.phase = 'reveal'; rollAnim.timer = 0; particles.clear(); return; }
   if (rollAnim && rollAnim.phase === 'show' && rollAnim.timer > 0.5) { onRollDone(); return; }
   if (multiOverlay.length && !rollAnimating && multiOverlayTimer > 0.4) { multiOverlay = []; return; }
   if (activeTab !== 'game') return;
@@ -644,7 +739,7 @@ canvas.addEventListener('click', e => {
     requestRolls(curMulti);
     if (curMulti > 1) gs.tickComboQuest();
   } else if (mx>=multX && mx<=multX+multW && my>=btnY && my<=btnY+btnH) {
-    const options = [1,3,5,10].filter(m => m <= gs.multiRoll);
+    const options = [1,3,5,10,20,50].filter(m => m <= gs.multiRoll);
     if (!options.length) return;
     const idx = options.indexOf(curMulti);
     curMulti = options[(idx+1) % options.length];
@@ -658,6 +753,7 @@ canvas.addEventListener('contextmenu', e => {
 
 window.addEventListener('keydown', e => {
   if (e.code === 'Space') {
+    if (rollAnim && rollAnim.phase === 'spin' && rollAnim.timer > 0.3) { rollAnim.phase = 'reveal'; rollAnim.timer = 0; particles.clear(); return; }
     if (rollAnim && rollAnim.phase === 'show' && rollAnim.timer > 0.5) { onRollDone(); return; }
     if (multiOverlay.length && !rollAnimating && multiOverlayTimer > 0.4) { multiOverlay = []; return; }
     if (activeTab === 'game' && !rollAnimating) requestRolls(curMulti);

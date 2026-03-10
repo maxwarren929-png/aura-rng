@@ -86,7 +86,7 @@ function drawDiamond(ctx, cx, cy, r) {
 }
 
 function tierShape(tier) {
-  if (['Godly','???','Cosmic','Divine'].includes(tier)) return 'star';
+  if (['Godly','???','Cosmic','Divine','Femboy'].includes(tier)) return 'star';
   if (['Legendary','Mythic'].includes(tier)) return 'diamond';
   return 'circle';
 }
@@ -282,6 +282,46 @@ function drawTierExtras(ctx, cx, cy, aura, t, scale) {
         ctx.fillStyle = rgb(c, a); ctx.fill();
       }
     }
+
+  } else if (tier === 'Femboy') {
+    // Spiral arms like Cosmic but with extra sparkle rings
+    const armLen = 130*scale;
+    for (let arm = 0; arm < 3; arm++) {
+      const baseAng = t*0.8 + arm*Math.PI*2/3;
+      for (let step = 0; step < 24; step++) {
+        const frac = step/24;
+        const ang = baseAng + frac*Math.PI*0.7;
+        const r = frac*armLen;
+        const px = cx+Math.cos(ang)*r, py = cy+Math.sin(ang)*r*0.35;
+        const a = 0.9*(1-frac);
+        const c = aura.colors[step%aura.colors.length];
+        const sz = Math.max(1, (5-frac*4)*scale);
+        ctx.beginPath(); ctx.arc(px, py, sz, 0, Math.PI*2);
+        ctx.fillStyle = rgb(c, a); ctx.fill();
+      }
+    }
+    // Orbiting heart symbols
+    ctx.save();
+    for (let i = 0; i < 6; i++) {
+      const ang = t*1.2 + i*Math.PI*2/6;
+      const r = 90*scale;
+      const px = cx+Math.cos(ang)*r, py = cy+Math.sin(ang)*r*0.4;
+      const c = aura.colors[i%aura.colors.length];
+      const heartA = 0.7 + 0.2*Math.sin(t*3+i);
+      ctx.globalAlpha = heartA;
+      ctx.fillStyle = rgb(c);
+      ctx.font = `${Math.round(14*scale)}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('♡', px, py);
+    }
+    ctx.textBaseline = 'alphabetic';
+    ctx.restore();
+    // Pulsing outer ring
+    const ringA = 0.25+0.15*Math.sin(t*2.5);
+    const ringR = (100+12*Math.sin(t*2))*scale;
+    ctx.beginPath(); ctx.arc(cx, cy, ringR, 0, Math.PI*2);
+    ctx.strokeStyle = rgb(aura.colors[0], ringA); ctx.lineWidth=3*scale; ctx.stroke();
   }
 }
 

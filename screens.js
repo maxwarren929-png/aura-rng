@@ -6,14 +6,34 @@ function tc(tier) { return cssColor(TIER_COLORS[tier] || [200,200,200]); }
 
 // ── SHOP ──────────────────────────────────────────────────────────────────────
 const SHOP_ITEMS = [
-  { id:'luck',     name:'🍀 Luck Boost',      desc:'Multiplies chance of rarer auras.',   costs:[50,150,400,1000,2500,6000,15000,40000,100000,250000], maxLevel:10, key:'luckLevel',   cat:'Upgrades' },
-  { id:'speed',    name:'⚡ Roll Speed',       desc:'Reduces the auto-roll interval.',      costs:[80,300,900,2500],                                       maxLevel:4,  key:'speedLevel',  cat:'Upgrades' },
-  { id:'auto',     name:'🤖 Auto-Roll',        desc:'Rolls automatically on a timer.',      costs:[200],                                                    maxLevel:1,  key:null,          cat:'Upgrades' },
-  { id:'multi3',   name:'🎲×3 Multi Roll',     desc:'Roll 3 auras at once.',                costs:[500],                                                    maxLevel:1,  key:null,          cat:'Upgrades' },
-  { id:'multi5',   name:'🎲×5 Multi Roll',     desc:'Roll 5 auras at once.',                costs:[2000],                                                   maxLevel:1,  key:null,          cat:'Upgrades' },
-  { id:'multi10',  name:'🎲×10 Multi Roll',    desc:'Roll 10 auras at once.',               costs:[8000],                                                   maxLevel:1,  key:null,          cat:'Upgrades' },
-  { id:'potion_sm',name:'🧪 Luck Potion',      desc:'×3 chance for 5 rolls.',               costs:[30],                                                     maxLevel:null,key:null,         cat:'Consumables' },
-  { id:'potion_lg',name:'⚗️ Grand Potion',     desc:'×5 chance for 20 rolls.',              costs:[200],                                                    maxLevel:null,key:null,         cat:'Consumables' },
+  // ── Upgrades ──
+  { id:'luck',      name:'🍀 Luck Boost',       desc:'Multiplies chance of rarer auras. Stacks with equipped aura bonus.',
+    costs:[50,150,400,1000,2500,6000,15000,40000,100000,250000,600000,1500000,4000000,10000000,25000000,60000000,150000000,400000000,1000000000,2500000000],
+    maxLevel:20, key:'luckLevel', cat:'Upgrades' },
+  { id:'speed',     name:'⚡ Roll Speed',        desc:'Reduces the auto-roll interval.',
+    costs:[80,300,900,2500,8000,30000],
+    maxLevel:6, key:'speedLevel', cat:'Upgrades' },
+  { id:'coinboost', name:'🪙 Coin Boost',        desc:'Earn more coins from every roll.',
+    costs:[500,2000,8000,30000,100000],
+    maxLevel:5, key:'coinBoostLevel', cat:'Upgrades' },
+  { id:'xpboost',   name:'✨ XP Boost',          desc:'Earn more XP from every roll.',
+    costs:[400,1500,6000,25000,80000],
+    maxLevel:5, key:'xpBoostLevel', cat:'Upgrades' },
+  { id:'crit',      name:'💥 Critical Roll',     desc:'Chance to double coins & xp on any roll.',
+    costs:[1000,4000,15000,60000,200000],
+    maxLevel:5, key:'critLevel', cat:'Upgrades' },
+  { id:'auto',      name:'🤖 Auto-Roll',         desc:'Rolls automatically on a timer.',
+    costs:[200], maxLevel:1, key:null, cat:'Upgrades' },
+  { id:'multi3',    name:'🎲×3 Multi Roll',      desc:'Roll 3 auras at once.',  costs:[500],    maxLevel:1, key:null, cat:'Upgrades' },
+  { id:'multi5',    name:'🎲×5 Multi Roll',      desc:'Roll 5 auras at once.',  costs:[2000],   maxLevel:1, key:null, cat:'Upgrades' },
+  { id:'multi10',   name:'🎲×10 Multi Roll',     desc:'Roll 10 auras at once.', costs:[8000],   maxLevel:1, key:null, cat:'Upgrades' },
+  { id:'multi20',   name:'🎲×20 Multi Roll',     desc:'Roll 20 auras at once.', costs:[25000],  maxLevel:1, key:null, cat:'Upgrades' },
+  { id:'multi50',   name:'🎲×50 Multi Roll',     desc:'Roll 50 auras at once.', costs:[100000], maxLevel:1, key:null, cat:'Upgrades' },
+  // ── Consumables ──
+  { id:'potion_sm', name:'🧪 Luck Potion',       desc:'×3 chance for 5 rolls.',              costs:[30],   maxLevel:null, key:null, cat:'Consumables' },
+  { id:'potion_lg', name:'⚗️ Grand Potion',      desc:'×5 chance for 20 rolls.',             costs:[200],  maxLevel:null, key:null, cat:'Consumables' },
+  { id:'potion_my', name:'🔮 Mystic Potion',     desc:'×8 chance for 15 rolls.',             costs:[800],  maxLevel:null, key:null, cat:'Consumables' },
+  { id:'potion_om', name:'💜 Omega Potion',      desc:'×15 chance for 40 rolls.',            costs:[4000], maxLevel:null, key:null, cat:'Consumables' },
 ];
 
 export function renderShop(container, gs, onBuy) {
@@ -61,17 +81,39 @@ function shopItemState(item, gs) {
 
   if (id === 'luck') {
     const lvl = gs.luckLevel;
-    maxed = lvl >= 10;
+    maxed = lvl >= maxLevel;
     cost = maxed ? null : costs[lvl];
     costStr = maxed ? 'MAX' : `🪙 ${cost.toLocaleString()}`;
-    effectStr = `Mult: ×${gs.luckMult.toFixed(2)}  (Lv${lvl}/10)`;
+    const auraBonus = gs.auraLuckBonus > 1 ? `  +Aura ×${gs.auraLuckBonus.toFixed(2)}` : '';
+    effectStr = `Total: ×${gs.luckMult.toFixed(2)}  (Lv${lvl}/${maxLevel})${auraBonus}`;
     canBuy = !maxed && gs.coins >= cost;
   } else if (id === 'speed') {
     const lvl = gs.speedLevel;
-    maxed = lvl >= 4;
+    maxed = lvl >= maxLevel;
     cost = maxed ? null : costs[lvl];
     costStr = maxed ? 'MAX' : `🪙 ${cost.toLocaleString()}`;
-    effectStr = `Interval: ${gs.rollInterval.toFixed(1)}s  (Lv${lvl}/4)`;
+    effectStr = `Interval: ${gs.rollInterval.toFixed(2)}s  (Lv${lvl}/${maxLevel})`;
+    canBuy = !maxed && gs.coins >= cost;
+  } else if (id === 'coinboost') {
+    const lvl = gs.coinBoostLevel;
+    maxed = lvl >= maxLevel;
+    cost = maxed ? null : costs[lvl];
+    costStr = maxed ? 'MAX' : `🪙 ${cost.toLocaleString()}`;
+    effectStr = `Coins ×${gs.coinMult.toFixed(2)}  (Lv${lvl}/${maxLevel})`;
+    canBuy = !maxed && gs.coins >= cost;
+  } else if (id === 'xpboost') {
+    const lvl = gs.xpBoostLevel;
+    maxed = lvl >= maxLevel;
+    cost = maxed ? null : costs[lvl];
+    costStr = maxed ? 'MAX' : `🪙 ${cost.toLocaleString()}`;
+    effectStr = `XP ×${gs.xpMult.toFixed(2)}  (Lv${lvl}/${maxLevel})`;
+    canBuy = !maxed && gs.coins >= cost;
+  } else if (id === 'crit') {
+    const lvl = gs.critLevel;
+    maxed = lvl >= maxLevel;
+    cost = maxed ? null : costs[lvl];
+    costStr = maxed ? 'MAX' : `🪙 ${cost.toLocaleString()}`;
+    effectStr = `Crit chance: ${(gs.critChance*100).toFixed(0)}%  (Lv${lvl}/${maxLevel})`;
     canBuy = !maxed && gs.coins >= cost;
   } else if (id === 'auto') {
     if (gs.autoUnlocked) { cost=0; costStr='FREE'; btnLabel=gs.autoRoll?'Turn OFF':'Turn ON'; canBuy=true; }
@@ -86,9 +128,19 @@ function shopItemState(item, gs) {
   } else if (id === 'multi10') {
     maxed = gs.multiRoll >= 10; costStr = maxed ? 'OWNED' : `🪙 ${costs[0].toLocaleString()}`; canBuy = !maxed && gs.coins >= costs[0];
     effectStr = maxed ? 'Unlocked' : 'Locked';
+  } else if (id === 'multi20') {
+    maxed = gs.multiRoll >= 20; costStr = maxed ? 'OWNED' : `🪙 ${costs[0].toLocaleString()}`; canBuy = !maxed && gs.coins >= costs[0];
+    effectStr = maxed ? 'Unlocked' : 'Locked';
+  } else if (id === 'multi50') {
+    maxed = gs.multiRoll >= 50; costStr = maxed ? 'OWNED' : `🪙 ${costs[0].toLocaleString()}`; canBuy = !maxed && gs.coins >= costs[0];
+    effectStr = maxed ? 'Unlocked' : 'Locked';
   } else if (id === 'potion_sm') {
     effectStr = `${gs.potionRollsLeft} rolls remaining`; canBuy = gs.coins >= costs[0];
   } else if (id === 'potion_lg') {
+    effectStr = `${gs.potionRollsLeft} rolls remaining`; canBuy = gs.coins >= costs[0];
+  } else if (id === 'potion_my') {
+    effectStr = `${gs.potionRollsLeft} rolls remaining`; canBuy = gs.coins >= costs[0];
+  } else if (id === 'potion_om') {
     effectStr = `${gs.potionRollsLeft} rolls remaining`; canBuy = gs.coins >= costs[0];
   }
   return { canBuy, cost, costStr, effectStr, btnLabel, maxed };
@@ -99,13 +151,25 @@ function purchase(id, gs) {
   if (!item) return;
   const costs = item.costs;
   if (id === 'luck') {
-    if (gs.luckLevel >= 10 || gs.coins < costs[gs.luckLevel]) return;
+    if (gs.luckLevel >= item.maxLevel || gs.coins < costs[gs.luckLevel]) return;
     gs.coins -= costs[gs.luckLevel]; gs.luckLevel++;
-    gs.pushNotification(`Luck boosted to level ${gs.luckLevel}!`, [80,255,80]);
+    gs.pushNotification(`🍀 Luck Lv${gs.luckLevel}! Total ×${gs.luckMult.toFixed(2)}`, [80,255,80]);
   } else if (id === 'speed') {
-    if (gs.speedLevel >= 4 || gs.coins < costs[gs.speedLevel]) return;
+    if (gs.speedLevel >= item.maxLevel || gs.coins < costs[gs.speedLevel]) return;
     gs.coins -= costs[gs.speedLevel]; gs.speedLevel++;
-    gs.pushNotification(`Roll speed level ${gs.speedLevel}!`, [0,220,255]);
+    gs.pushNotification(`⚡ Speed Lv${gs.speedLevel}! Interval ${gs.rollInterval.toFixed(2)}s`, [0,220,255]);
+  } else if (id === 'coinboost') {
+    if (gs.coinBoostLevel >= item.maxLevel || gs.coins < costs[gs.coinBoostLevel]) return;
+    gs.coins -= costs[gs.coinBoostLevel]; gs.coinBoostLevel++;
+    gs.pushNotification(`🪙 Coin Boost Lv${gs.coinBoostLevel}! ×${gs.coinMult.toFixed(2)} coins`, [255,215,0]);
+  } else if (id === 'xpboost') {
+    if (gs.xpBoostLevel >= item.maxLevel || gs.coins < costs[gs.xpBoostLevel]) return;
+    gs.coins -= costs[gs.xpBoostLevel]; gs.xpBoostLevel++;
+    gs.pushNotification(`✨ XP Boost Lv${gs.xpBoostLevel}! ×${gs.xpMult.toFixed(2)} XP`, [0,229,255]);
+  } else if (id === 'crit') {
+    if (gs.critLevel >= item.maxLevel || gs.coins < costs[gs.critLevel]) return;
+    gs.coins -= costs[gs.critLevel]; gs.critLevel++;
+    gs.pushNotification(`💥 Crit Lv${gs.critLevel}! ${(gs.critChance*100).toFixed(0)}% crit chance`, [255,220,50]);
   } else if (id === 'auto') {
     if (!gs.autoUnlocked) {
       if (gs.coins < costs[0]) return;
@@ -121,16 +185,32 @@ function purchase(id, gs) {
   } else if (id === 'multi10') {
     if (gs.multiRoll >= 10 || gs.coins < costs[0]) return;
     gs.coins -= costs[0]; gs.multiRoll = 10; gs.pushNotification('×10 Multi-roll unlocked!', [255,215,0]);
+  } else if (id === 'multi20') {
+    if (gs.multiRoll >= 20 || gs.coins < costs[0]) return;
+    gs.coins -= costs[0]; gs.multiRoll = 20; gs.pushNotification('×20 Multi-roll unlocked!', [255,215,0]);
+  } else if (id === 'multi50') {
+    if (gs.multiRoll >= 50 || gs.coins < costs[0]) return;
+    gs.coins -= costs[0]; gs.multiRoll = 50; gs.pushNotification('×50 Multi-roll unlocked!', [255,215,0]);
   } else if (id === 'potion_sm') {
     if (gs.coins < costs[0]) return;
-    gs.coins -= costs[0]; gs.potionActive = true; gs.potionMult = 3.0;
+    gs.coins -= costs[0]; gs.potionActive = true; gs.potionMult = Math.max(gs.potionMult||0, 3.0);
     gs.potionRollsLeft = Math.max(gs.potionRollsLeft, 0) + 5;
-    gs.pushNotification('Luck Potion! ×3 for 5 rolls', [180,80,255]);
+    gs.pushNotification('🧪 Luck Potion! ×3 for 5 rolls', [180,80,255]);
   } else if (id === 'potion_lg') {
     if (gs.coins < costs[0]) return;
-    gs.coins -= costs[0]; gs.potionActive = true; gs.potionMult = 5.0;
+    gs.coins -= costs[0]; gs.potionActive = true; gs.potionMult = Math.max(gs.potionMult||0, 5.0);
     gs.potionRollsLeft = Math.max(gs.potionRollsLeft, 0) + 20;
-    gs.pushNotification('Grand Potion! ×5 for 20 rolls', [255,100,255]);
+    gs.pushNotification('⚗️ Grand Potion! ×5 for 20 rolls', [255,100,255]);
+  } else if (id === 'potion_my') {
+    if (gs.coins < costs[0]) return;
+    gs.coins -= costs[0]; gs.potionActive = true; gs.potionMult = Math.max(gs.potionMult||0, 8.0);
+    gs.potionRollsLeft = Math.max(gs.potionRollsLeft, 0) + 15;
+    gs.pushNotification('🔮 Mystic Potion! ×8 for 15 rolls', [140,80,255]);
+  } else if (id === 'potion_om') {
+    if (gs.coins < costs[0]) return;
+    gs.coins -= costs[0]; gs.potionActive = true; gs.potionMult = Math.max(gs.potionMult||0, 15.0);
+    gs.potionRollsLeft = Math.max(gs.potionRollsLeft, 0) + 40;
+    gs.pushNotification('💜 Omega Potion! ×15 for 40 rolls', [180,40,255]);
   }
 }
 
@@ -165,6 +245,9 @@ export function renderCollection(container, gs, onEquip, onSell) {
           style="flex:1;padding:3px 0;font-size:10px;font-weight:700;border-radius:5px;cursor:pointer;
           border:1px solid #ff5555;background:#280808;color:#ff5555">Sell<br/><span style="font-size:9px">🪙${aura.sellValue}</span></button>` : ''}
       </div>
+      ${count > 1 ? `<button onclick="window._collSellAll('${aura.id}')"
+        style="width:100%;margin-top:4px;padding:3px 0;font-size:9px;font-weight:700;border-radius:5px;cursor:pointer;
+        border:1px solid #ff8844;background:#200808;color:#ff8844">Sell All But One (×${count-1}) 🪙${aura.sellValue*(count-1)}</button>` : ''}
     </div>`;
   }).join('');
 
@@ -173,6 +256,12 @@ export function renderCollection(container, gs, onEquip, onSell) {
     const a = gs.getAura(id);
     if (!a) return;
     if (gs.sellAura(id)) { gs.pushNotification(`Sold ${a.name} for 🪙${a.sellValue}`, [255,215,0]); onSell(); }
+  };
+  window._collSellAll = id => {
+    const a = gs.getAura(id);
+    if (!a) return;
+    const n = gs.sellAllButOne(id);
+    if (n > 0) { gs.pushNotification(`Sold ×${n} ${a.name} for 🪙${(a.sellValue*n).toLocaleString()}`, [255,215,0]); onSell(); }
   };
 }
 
@@ -304,7 +393,11 @@ export function renderStats(container, gs) {
           ['Coins Earned', `${gs.totalCoinsEarned.toLocaleString()} 🪙`],
           ['Auras Sold', gs.totalSold.toLocaleString()],
           ['Luck Level', `Lv${gs.luckLevel} (×${gs.luckMult.toFixed(2)})`],
-          ['Roll Speed', `Lv${gs.speedLevel} (${gs.rollInterval.toFixed(1)}s)`],
+          ['Aura Luck Bonus', `×${gs.auraLuckBonus.toFixed(2)}`],
+          ['Roll Speed', `Lv${gs.speedLevel} (${gs.rollInterval.toFixed(2)}s)`],
+          ['Coin Boost', `Lv${gs.coinBoostLevel} (×${gs.coinMult.toFixed(2)})`],
+          ['XP Boost', `Lv${gs.xpBoostLevel} (×${gs.xpMult.toFixed(2)})`],
+          ['Crit Chance', `Lv${gs.critLevel} (${(gs.critChance*100).toFixed(0)}%)`],
           ['Multi-Roll', `×${gs.multiRoll}`],
           ['Auto-Roll', gs.autoRoll ? '🟢 ON' : '🔴 OFF'],
           ['Total Merges', gs.totalMerges.toLocaleString()],

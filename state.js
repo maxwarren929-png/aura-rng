@@ -38,7 +38,10 @@ export class GameState {
     this.mergedDefs = {};      // id -> serialized aura dict
     this.mergedInventory = {}; // id -> count
     this.equippedId = null;
-    this.activeEnchantment = null;
+    this.auraEnchantments = {}; // aura id -> enchantment id
+    this.coinBoostLevel = 0;
+    this.xpBoostLevel = 0;
+    this.critLevel = 0;
     this.quests = ALL_QUESTS.map(q => ({ ...q, progress: 0, completed: false }));
     this.totalCoinsEarned = 0;
     this.totalSold = 0;
@@ -56,15 +59,40 @@ export class GameState {
     this._mergedRuntimeCache = null;
   }
 
+  get auraLuckBonus() {
+    const aura = this.equipped;
+    if (!aura) return 1.0;
+    const rank = tierRank(aura.tier); // 0=Common … 10=???
+    return 1.0 + rank * 0.05; // +5% per tier rank (up to +50% for ???)
+  }
+
   get luckMult() {
     const base = 1.0 + this.luckLevel * 0.4;
     const potion = this.potionActive ? this.potionMult : 1.0;
-    return base * potion;
+    return base * potion * this.auraLuckBonus;
   }
 
-  get rollInterval() { return [2.5, 1.8, 1.2, 0.7, 0.4][this.speedLevel]; }
+  get coinMult() { return 1.0 + this.coinBoostLevel * 0.25; }
+  get xpMult()   { return 1.0 + this.xpBoostLevel * 0.25; }
+  get critChance() { return this.critLevel * 0.08; }
+
+  get rollInterval() { return [2.5, 1.8, 1.2, 0.7, 0.4, 0.25, 0.12][this.speedLevel]; }
   get xpToNext() { return xpForLevel(this.level + 1); }
   get charScale() { return this.activeEnchantment === 'fatass' ? 2.0 : 1.0; }
+
+  get activeEnchantment() {
+    if (!this.equippedId) return null;
+    return this.auraEnchantments[this.equippedId] || null;
+  }
+
+  set activeEnchantment(v) {
+    if (!this.equippedId) return;
+    if (v === null || v === undefined) {
+      delete this.auraEnchantments[this.equippedId];
+    } else {
+      this.auraEnchantments[this.equippedId] = v;
+    }
+  }
 
   get mergedRuntime() {
     if (!this._mergedRuntimeCache) this._rebuildMergedRuntime();
@@ -161,18 +189,21 @@ export class GameState {
     const firstTime = !this.has(aura.id);
     this.inventory[aura.id] = (this.inventory[aura.id]||0) + 1;
     const baseCoins = aura.sellValue;
-    const earned = firstTime ? baseCoins * 5 : baseCoins * 2;
+    const isCrit = Math.random() < this.critChance;
+    const critMult = isCrit ? 2 : 1;
+    const earned = Math.floor((firstTime ? baseCoins * 5 : baseCoins * 2) * this.coinMult) * critMult;
     this.coins += earned;
     this.totalCoinsEarned += earned;
-    const xpGain = aura.xpReward * (firstTime ? 2 : 1);
+    const xpGain = Math.floor(aura.xpReward * (firstTime ? 2 : 1) * this.xpMult) * critMult;
     this._addXp(xpGain);
+    if (isCrit) this.pushNotification('💥 Critical Roll! ×2 coins & xp!', [255,220,50]);
     if (!this.equippedId) this.equippedId = aura.id;
     else { const cur = this.getAura(this.equippedId); if (cur && aura.rarity > cur.rarity) this.equippedId = aura.id; }
     if (!this.bestAuraId) this.bestAuraId = aura.id;
     else { const best = this.getAura(this.bestAuraId); if (best && aura.rarity > best.rarity) this.bestAuraId = aura.id; }
     if (this.potionActive) { this.potionRollsLeft--; if (this.potionRollsLeft <= 0) this.potionActive = false; }
     this._tickQuests(aura, firstTime);
-    return { aura, firstTime, coins: earned, xp: xpGain };
+    return { aura, firstTime, coins: earned, xp: xpGain, isCrit };
   }
 
   _addXp(amount) {
@@ -268,6 +299,29 @@ export class GameState {
     return true;
   }
 
+  sellAllButOne(id) {
+    const aura = this.getAura(id);
+    if (!aura) return 0;
+    const total = this.countOf(id);
+    if (total <= 1) return 0;
+    const sellCount = total - 1;
+    for (let i = 0; i < sellCount; i++) {
+      if ((this.inventory[id]||0) > 0) this.inventory[id]--;
+      else if ((this.mergedInventory[id]||0) > 0) this.mergedInventory[id]--;
+    }
+    const coinsEarned = aura.sellValue * sellCount;
+    this.coins += coinsEarned;
+    this.totalCoinsEarned += coinsEarned;
+    this.totalSold += sellCount;
+    for (const q of this.quests) {
+      if (q.id === 'sell10' && !q.completed) {
+        q.progress += sellCount;
+        if (q.progress >= q.goal) this._completeQuest(q);
+      }
+    }
+    return sellCount;
+  }
+
   // ── Notifications ────────────────────────────────────────────────────────
   pushNotification(msg, color=[255,255,255]) {
     this.notifications.push({ msg, color, timer: 3.5 });
@@ -281,7 +335,8 @@ export class GameState {
       autoRoll:this.autoRoll, autoUnlocked:this.autoUnlocked, multiRoll:this.multiRoll,
       potionActive:this.potionActive, potionRollsLeft:this.potionRollsLeft, potionMult:this.potionMult,
       inventory:this.inventory, mergedDefs:this.mergedDefs, mergedInventory:this.mergedInventory,
-      equippedId:this.equippedId, activeEnchantment:this.activeEnchantment,
+      equippedId:this.equippedId, auraEnchantments:this.auraEnchantments,
+      coinBoostLevel:this.coinBoostLevel, xpBoostLevel:this.xpBoostLevel, critLevel:this.critLevel,
       totalCoinsEarned:this.totalCoinsEarned, totalSold:this.totalSold, totalMerges:this.totalMerges,
       bestAuraId:this.bestAuraId,
       pityRare:this.pityRare, pityEpic:this.pityEpic, pityLegendary:this.pityLegendary, pityMythic:this.pityMythic,
@@ -292,9 +347,16 @@ export class GameState {
   fromDict(d) {
     const keys = ['rolls','coins','xp','level','luckLevel','speedLevel','autoRoll','autoUnlocked',
       'multiRoll','potionActive','potionRollsLeft','potionMult','inventory','mergedDefs',
-      'mergedInventory','equippedId','activeEnchantment','totalCoinsEarned','totalSold',
-      'totalMerges','bestAuraId','pityRare','pityEpic','pityLegendary','pityMythic'];
+      'mergedInventory','equippedId','coinBoostLevel','xpBoostLevel','critLevel',
+      'totalCoinsEarned','totalSold','totalMerges','bestAuraId',
+      'pityRare','pityEpic','pityLegendary','pityMythic'];
     for (const k of keys) if (d[k] !== undefined) this[k] = d[k];
+    // Load per-aura enchantments (with migration from old global activeEnchantment)
+    if (d.auraEnchantments) {
+      this.auraEnchantments = d.auraEnchantments;
+    } else if (d.activeEnchantment && this.equippedId) {
+      this.auraEnchantments[this.equippedId] = d.activeEnchantment;
+    }
     this._mergedRuntimeCache = null;
     const qmap = {};
     for (const q of this.quests) qmap[q.id] = q;
