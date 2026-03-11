@@ -28,7 +28,7 @@ router.get('/challenges', auth, async (req, res) => {
        FROM battle_challenges
        WHERE opponent_name = $1 AND status = 'pending'
        ORDER BY created_at DESC LIMIT 20`,
-      [req.user.username]
+      [req.player.username]
     );
     // Build preview of challenger's team
     const result = rows.map(r => ({
@@ -57,12 +57,12 @@ router.post('/challenge', auth, async (req, res) => {
       'SELECT id, username FROM users WHERE username = $1', [opponent_username]
     );
     if (!users.length) return res.status(404).json({ error: 'Player not found' });
-    if (users[0].id === req.user.id) return res.status(400).json({ error: "Can't challenge yourself" });
+    if (users[0].id === req.player.id) return res.status(400).json({ error: "Can't challenge yourself" });
 
     const { rows } = await pool.query(
       `INSERT INTO battle_challenges (challenger_id, challenger_name, challenger_team, opponent_id, opponent_name)
        VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-      [req.user.id, req.user.username, JSON.stringify(team), users[0].id, users[0].username]
+      [req.player.id, req.player.username, JSON.stringify(team), users[0].id, users[0].username]
     );
     res.json({ ok: true, id: rows[0].id });
   } catch(e) {
@@ -83,7 +83,7 @@ router.post('/challenge/:id/accept', auth, async (req, res) => {
     );
     if (!rows.length) return res.status(404).json({ error: 'Challenge not found' });
     const ch = rows[0];
-    if (ch.opponent_name !== req.user.username) return res.status(403).json({ error: 'Not your challenge' });
+    if (ch.opponent_name !== req.player.username) return res.status(403).json({ error: 'Not your challenge' });
     if (ch.status !== 'pending') return res.status(400).json({ error: 'Challenge already resolved' });
 
     await pool.query(
@@ -105,7 +105,7 @@ router.post('/challenge/:id/decline', auth, async (req, res) => {
       'SELECT * FROM battle_challenges WHERE id = $1', [req.params.id]
     );
     if (!rows.length) return res.status(404).json({ error: 'Challenge not found' });
-    if (rows[0].opponent_name !== req.user.username) return res.status(403).json({ error: 'Not your challenge' });
+    if (rows[0].opponent_name !== req.player.username) return res.status(403).json({ error: 'Not your challenge' });
     await pool.query('UPDATE battle_challenges SET status=$1 WHERE id=$2', ['declined', req.params.id]);
     res.json({ ok: true });
   } catch(e) {

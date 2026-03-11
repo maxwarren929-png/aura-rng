@@ -45,6 +45,9 @@ const arenaState = {
   pendingChallenges:[],
   onlineBattleId:   null,
   pollTimer:        0,
+  rewardAuras:      [],
+  rewardCoins:      0,
+  rewardClaimed:    false,
 };
 
 // ── Tab management ────────────────────────────────────────────────────────────
@@ -132,6 +135,9 @@ function refreshArena() {
       if (b.phase === 'ended') {
         if (b.winner === 'player') {
           gs.tickBattleWin();
+          arenaState.rewardCoins   = 300;
+          arenaState.rewardAuras   = b.opponent.units.map(u => ({ id: u.id, name: u.name, tier: u.tier }));
+          arenaState.rewardClaimed = false;
           flushNotifications();
           updateHUD();
           pushNotif('🏆 You won the battle!', [80,255,120]);
@@ -149,7 +155,14 @@ function refreshArena() {
       if (!ok) return;
       if (b.phase === 'ended') {
         arenaState.phase = 'ended';
-        if (b.winner === 'player') { gs.tickBattleWin(); flushNotifications(); updateHUD(); pushNotif('🏆 You won!', [80,255,120]); }
+        if (b.winner === 'player') {
+          gs.tickBattleWin();
+          arenaState.rewardCoins   = 300;
+          arenaState.rewardAuras   = b.opponent.units.map(u => ({ id: u.id, name: u.name, tier: u.tier }));
+          arenaState.rewardClaimed = false;
+          flushNotifications(); updateHUD();
+          pushNotif('🏆 You won!', [80,255,120]);
+        }
       } else {
         arenaState.phase = b.needsPlayerSwitch ? 'needsSwitch' : 'battle';
       }
@@ -162,9 +175,32 @@ function refreshArena() {
       refreshArena();
     },
     reset() {
-      arenaState.battle = null;
-      arenaState.phase  = 'teamSelect';
-      arenaState.team   = [null, null, null];
+      arenaState.battle        = null;
+      arenaState.phase         = 'teamSelect';
+      arenaState.team          = [null, null, null];
+      arenaState.rewardAuras   = [];
+      arenaState.rewardCoins   = 0;
+      arenaState.rewardClaimed = false;
+      refreshArena();
+    },
+    async claimReward(auraId) {
+      if (arenaState.rewardClaimed) return;
+      arenaState.rewardClaimed = true;
+      try {
+        const data = await API.battleWin(auraId || null);
+        gs.fromDict(data.state);
+        flushNotifications();
+        updateHUD();
+        if (auraId) {
+          const aura = gs.getAura(auraId);
+          pushNotif(`Stole ${aura?.name || auraId} + 🪙${data.coinsEarned} from victory!`, [255,215,0]);
+        } else {
+          pushNotif(`🪙 +${data.coinsEarned} coins from victory!`, [255,215,0]);
+        }
+      } catch(e) {
+        arenaState.rewardClaimed = false;
+        pushNotif(`Reward error: ${e.message}`, [255,80,80]);
+      }
       refreshArena();
     },
     async sendChallenge(opponentUsername) {

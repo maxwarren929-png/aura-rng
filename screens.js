@@ -274,39 +274,16 @@ function hpColor(pct) {
   return '#ff5555';
 }
 
-function unitCard(unit, isActive, side) {
-  if (!unit) return '';
-  const color   = tc(unit.tier);
-  const pct     = unit.fainted ? 0 : unit.currentHp / unit.maxHp;
-  const hpPct   = Math.max(0, Math.floor(pct * 100));
-  const hpCol   = hpColor(pct);
-  const opacity = unit.fainted ? '0.35' : '1';
-  const border  = isActive ? `border:2px solid ${color}` : 'border:1px solid #2a2a4a';
-  const tag     = unit.fainted ? '<span style="font-size:9px;color:#ff5555;margin-left:4px">FAINTED</span>'
-    : (isActive ? '<span style="font-size:9px;color:#ffd700;margin-left:4px">ACTIVE</span>' : '');
-  const statusTag = unit.status === 'invincible'
-    ? '<span style="font-size:9px;color:#00e5ff;margin-left:4px">INVISIBLE</span>' : '';
-  return `<div style="background:#0d0d22;border-radius:8px;padding:8px 10px;min-width:130px;flex:1;opacity:${opacity};${border}">
-    <div style="font-weight:700;font-size:12px;color:${color}">${unit.name}${tag}${statusTag}</div>
-    <div style="font-size:10px;color:#6070a0">★ ${unit.tier}</div>
-    <div style="margin:4px 0 2px;background:#12122a;border-radius:4px;height:8px;overflow:hidden">
-      <div style="width:${hpPct}%;height:100%;background:${hpCol};transition:width .3s"></div>
-    </div>
-    <div style="font-size:10px;color:${hpCol}">${unit.fainted ? 'Fainted' : `${unit.currentHp}/${unit.maxHp} HP`}</div>
-    <div style="font-size:9px;color:#6070a0;margin-top:2px">ATK×${unit.atkMod.toFixed(1)} DEF×${unit.defMod.toFixed(1)} SPD ${Math.round(unit.baseSpd*unit.spdMod)}</div>
-  </div>`;
-}
-
 export function renderNormArena(root, gs, arenaState, handlers) {
   if (!root) return;
-  const { phase, battle, team, onlineBattle } = arenaState;
+  const { phase, battle, team } = arenaState;
 
   if (phase === 'teamSelect') {
     renderTeamSelect(root, gs, team, handlers);
   } else if (phase === 'battle' || phase === 'needsSwitch') {
     renderBattle(root, battle, gs, arenaState, handlers);
   } else if (phase === 'ended') {
-    renderBattleEnd(root, battle, handlers);
+    renderBattleEnd(root, battle, gs, arenaState, handlers);
   } else if (phase === 'onlineLobby') {
     renderOnlineLobby(root, gs, arenaState, handlers);
   }
@@ -318,15 +295,16 @@ function renderTeamSelect(root, gs, team, handlers) {
   const slotHTML = team.map((id, i) => {
     const a = id ? gs.getAura(id) : null;
     const color = a ? tc(a.tier) : '#6070a0';
-    return `<div style="background:#0d0d22;border:2px solid ${a ? color : '#2a2a4a'};border-radius:8px;padding:8px;min-width:100px;text-align:center;cursor:pointer"
+    return `<div style="background:#0d0d22;border:2px solid ${a ? color : '#2a2a4a'};border-radius:10px;padding:10px;min-width:100px;text-align:center;cursor:pointer"
       onclick="window._arenaRemoveSlot(${i})">
-      ${a ? `<div style="display:flex;gap:3px;justify-content:center;margin-bottom:4px">
-        ${a.colors.slice(0,3).map(c=>`<div style="width:8px;height:8px;border-radius:50%;background:rgb(${c})"></div>`).join('')}
-      </div>
-      <div style="font-size:11px;font-weight:700;color:${color}">${a.name}</div>
-      <div style="font-size:9px;color:${color};opacity:.7">${a.tier}</div>
-      <div style="font-size:9px;color:#ff5555;margin-top:2px">✕ Remove</div>`
-      : `<div style="font-size:24px;color:#2a2a4a">⚔️</div><div style="font-size:10px;color:#6070a0">Slot ${i+1}</div>`}
+      ${a
+        ? `<div style="display:flex;gap:3px;justify-content:center;margin-bottom:6px">
+            ${a.colors.slice(0,3).map(c=>`<div style="width:10px;height:10px;border-radius:50%;background:rgb(${c})"></div>`).join('')}
+          </div>
+          <div style="font-size:13px;font-weight:800;color:${color}">${a.name}</div>
+          <div style="font-size:10px;color:${color};opacity:.7;margin-top:2px">★ ${a.tier}</div>
+          <div style="font-size:9px;color:#ff5555;margin-top:6px;border-top:1px solid #2a2a4a;padding-top:4px">✕ Remove</div>`
+        : `<div style="font-size:28px;color:#2a2a4a;margin-bottom:4px">⚔️</div><div style="font-size:11px;color:#4a4a6a">Slot ${i+1}</div>`}
     </div>`;
   }).join('');
 
@@ -336,31 +314,31 @@ function renderTeamSelect(root, gs, team, handlers) {
     const selected = team.includes(aura.id);
     const stats    = getAuraStats(aura);
     const moves    = getAuraMoves(aura).map(id => MOVE_DEFS[id]?.name || id).join(', ');
-    return `<div class="aura-card ${selected ? 'equipped-badge' : ''}"
-      onclick="window._arenaPickAura('${aura.id}')"
-      style="cursor:pointer;${selected ? 'border-color:#ffd700;opacity:.6' : ''}">
+    return `<div class="aura-card" onclick="window._arenaPickAura('${aura.id}')"
+      style="cursor:pointer;${selected ? 'border-color:#ffd700;opacity:.5;' : ''}">
       <div style="display:flex;gap:3px;justify-content:center">
         ${aura.colors.slice(0,4).map(c=>`<div class="swatch" style="background:rgb(${c})"></div>`).join('')}
       </div>
-      <div class="name" style="color:${color};font-size:11px">${aura.name}</div>
+      <div class="name" style="color:${color};font-size:12px">${aura.name}</div>
       <div style="font-size:9px;color:${color};opacity:.7">★ ${aura.tier}</div>
-      <div style="font-size:9px;color:#6070a0;margin-top:3px">HP ${stats.hp} ATK ${stats.atk} DEF ${stats.def} SPD ${stats.spd}</div>
-      <div style="font-size:8px;color:#6070a0;margin-top:2px;word-break:break-word">${moves}</div>
-      ${selected ? '<div style="font-size:9px;color:#ffd700;margin-top:2px">✓ In team</div>' : ''}
+      <div style="font-size:9px;color:#6070a0;margin-top:4px">HP ${stats.hp} · ATK ${stats.atk} · DEF ${stats.def} · SPD ${stats.spd}</div>
+      <div style="font-size:8px;color:#4a4a6a;margin-top:2px;word-break:break-word">${moves}</div>
+      ${selected ? '<div style="font-size:9px;color:#ffd700;margin-top:3px;font-weight:700">✓ Selected</div>' : ''}
     </div>`;
   }).join('');
 
   root.innerHTML = `
   <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:12px;font-size:18px">⚔️ NormArena</h2>
   <div class="card" style="margin-bottom:12px">
-    <div style="font-size:12px;color:#6070a0;margin-bottom:8px">Select up to 3 Auras for your team (click to add, click slot to remove):</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">${slotHTML}</div>
+    <div style="font-size:12px;color:#6070a0;margin-bottom:10px">Pick up to 3 Auras for your team. Click a slot to remove.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">${slotHTML}</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn green" ${canBattle ? '' : 'disabled'} onclick="window._arenaStartAI()" style="opacity:${canBattle?1:.4}">⚔️ Battle AI</button>
-      <button class="btn purple" ${canBattle ? '' : 'disabled'} onclick="window._arenaOpenOnline()" style="opacity:${canBattle?1:.4}">🌐 Challenge Player</button>
+      <button class="btn green" ${canBattle ? '' : 'disabled'} onclick="window._arenaStartAI()" style="opacity:${canBattle?1:.4};font-size:13px;padding:8px 16px">⚔️ Battle AI</button>
+      <button class="btn purple" ${canBattle ? '' : 'disabled'} onclick="window._arenaOpenOnline()" style="opacity:${canBattle?1:.4};font-size:13px;padding:8px 16px">🌐 Challenge Player</button>
     </div>
   </div>
-  ${coll.length ? `<div id="arena-select-grid">${collHTML}</div>`
+  ${coll.length
+    ? `<div id="arena-select-grid">${collHTML}</div>`
     : '<div style="color:#6070a0;padding:20px;text-align:center">Roll some auras first!</div>'}`;
 
   window._arenaPickAura   = handlers.pickAura;
@@ -372,103 +350,224 @@ function renderTeamSelect(root, gs, team, handlers) {
 function renderBattle(root, battle, gs, arenaState, handlers) {
   if (!battle) { root.innerHTML = ''; return; }
 
-  const p = battle.player;
-  const o = battle.opponent;
+  const p  = battle.player;
+  const o  = battle.opponent;
   const pa = p.units[p.activeIdx];
   const oa = o.units[o.activeIdx];
 
-  const opTeamHTML = o.units.map((u, i) => unitCard(u, i === o.activeIdx, 'opp')).join('');
-  const plTeamHTML = p.units.map((u, i) => unitCard(u, i === p.activeIdx, 'pl')).join('');
+  // Small bench pips for non-active units
+  function benchPips(units, activeIdx) {
+    const pips = units.map((u, i) => {
+      if (i === activeIdx) return '';
+      const col = u.fainted ? '#3a1a1a' : tc(u.tier);
+      return `<div title="${u.name}${u.fainted ? ' (Fainted)' : ` — ${u.currentHp}/${u.maxHp} HP`}"
+        style="width:26px;height:26px;border-radius:6px;border:1px solid ${col};background:${u.fainted ? '#1a0808' : '#0d0d22'};
+        display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:${col};
+        opacity:${u.fainted ? 0.35 : 1}">${u.name.slice(0,2).toUpperCase()}</div>`;
+    }).join('');
+    return `<div style="display:flex;gap:4px">${pips}</div>`;
+  }
 
-  // Log (show last 6 lines)
-  const logLines = battle.log.slice(-6).map(l => `<div style="font-size:11px;color:#9090b0;padding:1px 0">${l}</div>`).join('');
+  // Large active-unit card (Pokemon-style)
+  function activeCard(unit) {
+    const color  = tc(unit.tier);
+    const pct    = unit.fainted ? 0 : unit.currentHp / unit.maxHp;
+    const hpPct  = Math.max(0, Math.floor(pct * 100));
+    const hpCol  = hpColor(pct);
+    const swatches = (unit.colors || []).slice(0,4)
+      .map(c => `<div style="width:8px;height:8px;border-radius:50%;background:rgb(${c})"></div>`).join('');
+    const statusBadge = unit.status === 'invincible'
+      ? '<span style="font-size:9px;color:#00e5ff;background:#001a20;padding:1px 6px;border-radius:3px">◈ INVISIBLE</span>'
+      : unit.status === 'taunted'
+      ? '<span style="font-size:9px;color:#ff9040;background:#1a0800;padding:1px 6px;border-radius:3px">⚡ TAUNTED</span>'
+      : unit.fainted
+      ? '<span style="font-size:9px;color:#ff5555;background:#200808;padding:1px 6px;border-radius:3px">✕ FAINTED</span>'
+      : '';
+    return `<div style="background:linear-gradient(135deg,#0d0d22,#101028);border:2px solid ${color}55;border-left:3px solid ${color};
+      border-radius:10px;padding:11px 14px;opacity:${unit.fainted ? .4 : 1}">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
+        <div style="font-weight:900;font-size:17px;color:${color};font-family:'Cinzel Decorative',serif">${unit.name}</div>
+        <div style="display:flex;gap:3px;align-items:center">${swatches}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <div style="font-size:10px;color:#6070a0;font-weight:700;width:18px">HP</div>
+        <div style="flex:1;background:#12122a;border-radius:4px;height:12px;overflow:hidden">
+          <div style="width:${hpPct}%;height:100%;background:${hpCol};transition:width .4s;border-radius:4px"></div>
+        </div>
+        <div style="font-size:11px;color:${hpCol};font-weight:700;min-width:72px;text-align:right">
+          ${unit.fainted ? 'FAINTED' : `${unit.currentHp} / ${unit.maxHp}`}
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:9px;color:#4a5070">★ ${unit.tier} · ATK×${unit.atkMod.toFixed(1)} DEF×${unit.defMod.toFixed(1)} SPD ${Math.round(unit.baseSpd * unit.spdMod)}</div>
+        <div>${statusBadge}</div>
+      </div>
+    </div>`;
+  }
 
+  // Battle log — last 5 lines, latest highlighted
+  const logLines = battle.log.slice(-5).map((l, i, arr) => {
+    const isLast = i === arr.length - 1;
+    return `<div style="font-size:${isLast ? 13 : 11}px;color:${isLast ? '#e8eeff' : '#505070'};
+      padding:${isLast ? '4' : '1'}px 0;${isLast ? 'font-weight:700;border-top:1px solid #1a1a3a;margin-top:4px' : ''}">${l}</div>`;
+  }).join('');
+
+  // Actions area
   let actionsHTML = '';
   if (battle.phase === 'battle') {
     if (arenaState.phase === 'needsSwitch' || battle.needsPlayerSwitch) {
-      // Forced switch UI
-      actionsHTML = `<div style="font-size:13px;color:#ff5555;margin-bottom:8px;font-weight:700">Your ${pa.name} fainted! Choose your next Aura:</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          ${p.units.map((u, i) => !u.fainted && i !== p.activeIdx
-            ? `<button class="btn green" onclick="window._arenaSwitch(${i})" style="font-size:12px">${u.name}</button>`
-            : '').join('')}
+      const alive = p.units.map((u, i) => ({ u, i })).filter(({ u, i }) => !u.fainted && i !== p.activeIdx);
+      actionsHTML = `
+        <div style="font-size:13px;color:#ff5555;margin-bottom:10px;font-weight:700;text-align:center">
+          ⚠️ ${pa.name} fainted! Choose your next Aura:
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(${Math.min(alive.length, 3)},1fr);gap:8px">
+          ${alive.map(({ u, i }) => `
+            <button onclick="window._arenaSwitch(${i})"
+              style="padding:10px;border-radius:8px;border:2px solid ${tc(u.tier)};background:#0d0d22;
+              color:${tc(u.tier)};cursor:pointer;font-size:13px;font-weight:800;text-align:center">
+              ${u.name}<br/><span style="font-size:10px;font-weight:400;opacity:.8">${u.currentHp}/${u.maxHp} HP</span>
+            </button>`).join('')}
         </div>`;
     } else if (battle.isPlayerTurn) {
-      // Move buttons
       const moves = pa.moves.map(id => MOVE_DEFS[id]).filter(Boolean);
+      const typeColor = t => t === 'damage' ? '#ff6060' : t === 'heal' ? '#44ff88' : t === 'stat' ? '#00e5ff' : '#ffd700';
+      const typeBg    = t => t === 'damage' ? '#1a0404' : t === 'heal' ? '#041a08' : t === 'stat' ? '#00111a' : '#1a1000';
       const moveBtns = moves.map(m => {
-        const typeColor = m.type === 'damage' ? '#ff6060' : m.type === 'heal' ? '#44ff88' : m.type === 'stat' ? '#00e5ff' : '#ffd700';
+        const col = typeColor(m.type);
         return `<button onclick="window._arenaMove('${m.id}')"
-          style="flex:1;min-width:120px;padding:8px 6px;border-radius:8px;border:1px solid ${typeColor};
-          background:#0a0a20;color:${typeColor};cursor:pointer;font-size:11px;font-weight:700;text-align:left">
-          <div style="font-weight:700">${m.name}</div>
-          <div style="font-size:9px;opacity:.75;margin-top:2px">${m.desc}</div>
+          style="padding:10px 8px;border-radius:8px;border:1px solid ${col}40;border-left:3px solid ${col};
+          background:${typeBg(m.type)};color:${col};cursor:pointer;text-align:left;width:100%">
+          <div style="font-weight:800;font-size:13px">${m.name}</div>
+          <div style="font-size:10px;opacity:.7;margin-top:2px;line-height:1.3">${m.desc}</div>
         </button>`;
       }).join('');
 
-      // Switch options
+      const switchable = p.units.filter((u, i) => !u.fainted && i !== p.activeIdx);
       const switchBtns = p.units.map((u, i) => !u.fainted && i !== p.activeIdx
-        ? `<button class="btn" onclick="window._arenaSwitch(${i})" style="font-size:11px">${u.name}</button>` : '').join('');
+        ? `<button onclick="window._arenaSwitch(${i})"
+            style="padding:5px 10px;border-radius:6px;border:1px solid ${tc(u.tier)};background:#0d0d22;
+            color:${tc(u.tier)};cursor:pointer;font-size:11px;font-weight:700">
+            ${u.name} (${u.currentHp}HP)
+          </button>` : '').join('');
 
       actionsHTML = `
-        <div style="font-size:11px;color:#ffd700;font-weight:700;margin-bottom:6px">Your Turn — ${pa.name}</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${moveBtns}</div>
-        ${switchBtns ? `<div style="font-size:10px;color:#6070a0;margin-bottom:4px">Or switch:</div>
+        <div style="font-size:10px;color:#6070a0;font-weight:700;letter-spacing:1.5px;margin-bottom:8px">⚔️ CHOOSE A MOVE — ${pa.name}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:${switchable.length ? '10' : '0'}px">${moveBtns}</div>
+        ${switchable.length ? `<div style="font-size:10px;color:#4a4a6a;margin-bottom:5px">↔ Switch Aura:</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">${switchBtns}</div>` : ''}`;
     } else {
-      actionsHTML = `<div style="font-size:13px;color:#6070a0;font-style:italic">Opponent is acting…</div>`;
+      actionsHTML = `<div style="font-size:13px;color:#6070a0;font-style:italic;text-align:center;padding:12px">⏳ Waiting for opponent…</div>`;
     }
   }
 
   root.innerHTML = `
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:16px;margin:0">⚔️ NormArena</h2>
-    <button class="btn red" style="font-size:11px" onclick="window._arenaForfeit()">Forfeit</button>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;font-size:15px;margin:0">⚔️ NormArena</h2>
+    <button onclick="window._arenaForfeit()"
+      style="padding:5px 12px;border-radius:6px;border:1px solid #ff5555;background:#280808;color:#ff5555;cursor:pointer;font-size:11px;font-weight:700">
+      Forfeit
+    </button>
   </div>
 
-  <div style="font-size:11px;font-weight:700;color:#ff6060;letter-spacing:1px;margin-bottom:4px">${battle.opponentName.toUpperCase()}</div>
-  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${opTeamHTML}</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+    <div style="font-size:11px;font-weight:700;color:#ff6060;letter-spacing:1px">${battle.opponentName.toUpperCase()}</div>
+    ${benchPips(o.units, o.activeIdx)}
+  </div>
+  ${activeCard(oa)}
 
-  <div style="font-size:11px;font-weight:700;color:#44ff88;letter-spacing:1px;margin-bottom:4px">${battle.playerName.toUpperCase()}</div>
-  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${plTeamHTML}</div>
+  <div style="text-align:center;font-size:10px;color:#2a2a4a;letter-spacing:4px;margin:8px 0">— VS —</div>
 
-  <div class="card" style="margin-bottom:10px;max-height:110px;overflow-y:auto;padding:8px 10px">
-    ${logLines || '<div style="color:#6070a0;font-size:11px">Battle started…</div>'}
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+    <div style="font-size:11px;font-weight:700;color:#44ff88;letter-spacing:1px">${battle.playerName.toUpperCase()}</div>
+    ${benchPips(p.units, p.activeIdx)}
+  </div>
+  ${activeCard(pa)}
+
+  <div style="background:#06060f;border:1px solid #1a1a3a;border-radius:8px;padding:10px 12px;margin:10px 0;min-height:65px">
+    ${logLines || '<div style="color:#4a4a6a;font-size:11px;font-style:italic">Battle begins…</div>'}
   </div>
 
-  <div class="card" style="padding:10px">${actionsHTML}</div>`;
+  <div style="background:#0a0a18;border:1px solid #1a1a34;border-radius:10px;padding:12px">
+    ${actionsHTML}
+  </div>`;
 
   window._arenaMove    = handlers.useMove;
   window._arenaSwitch  = handlers.switchAura;
   window._arenaForfeit = handlers.forfeit;
 }
 
-function renderBattleEnd(root, battle, handlers) {
+function renderBattleEnd(root, battle, gs, arenaState, handlers) {
   if (!battle) { root.innerHTML = ''; return; }
-  const won = battle.winner === 'player';
+  const won   = battle.winner === 'player';
   const color = won ? '#44ff88' : '#ff5555';
-  const lastLogs = battle.log.slice(-8).map(l => `<div style="font-size:11px;color:#9090b0;padding:1px 0">${l}</div>`).join('');
+  const lastLogs = battle.log.slice(-6).map(l =>
+    `<div style="font-size:11px;color:#505070;padding:1px 0">${l}</div>`).join('');
+
+  let rewardHTML = '';
+  if (won) {
+    if (!arenaState.rewardClaimed) {
+      const coins      = arenaState.rewardCoins || 0;
+      const rewardAuras = arenaState.rewardAuras || [];
+      const auraCards  = rewardAuras.map(a => {
+        const col      = tc(a.tier);
+        const auraData = gs.getAura(a.id);
+        const swatches = auraData
+          ? auraData.colors.slice(0,3).map(c => `<div style="width:7px;height:7px;border-radius:50%;background:rgb(${c})"></div>`).join('')
+          : '';
+        return `<button onclick="window._arenaClaimReward('${a.id}')"
+          style="flex:1;min-width:90px;padding:10px 8px;border-radius:8px;border:2px solid ${col};background:#0d0d22;
+          cursor:pointer;text-align:center;color:${col};font-family:'Exo 2',sans-serif">
+          <div style="display:flex;gap:3px;justify-content:center;margin-bottom:5px">${swatches}</div>
+          <div style="font-weight:800;font-size:12px">${a.name}</div>
+          <div style="font-size:9px;opacity:.7;margin-top:2px">★ ${a.tier}</div>
+        </button>`;
+      }).join('');
+
+      rewardHTML = `
+      <div class="card" style="margin-bottom:12px;border-color:#ffd70033">
+        <div style="font-size:11px;font-weight:700;color:#ffd700;letter-spacing:1.5px;margin-bottom:10px">BATTLE REWARDS</div>
+        ${coins > 0 ? `<div style="font-size:15px;color:#ffd700;font-weight:700;margin-bottom:10px">🪙 +${coins.toLocaleString()} coins</div>` : ''}
+        ${rewardAuras.length
+          ? `<div style="font-size:12px;color:#e8eeff;margin-bottom:8px">⚔️ Steal one Aura from the defeated team:</div>
+             <div style="display:flex;gap:8px;flex-wrap:wrap">${auraCards}</div>`
+          : `<button class="btn green" onclick="window._arenaClaimReward(null)">Collect Rewards</button>`}
+      </div>`;
+    } else {
+      rewardHTML = `
+      <div class="card" style="margin-bottom:12px;text-align:center;border-color:#44ff8833">
+        <div style="font-size:13px;color:#44ff88;font-weight:700">✓ Rewards collected!</div>
+      </div>`;
+    }
+  }
+
   root.innerHTML = `
   <h2 style="font-family:'Cinzel Decorative',serif;color:#ffd700;margin-bottom:16px;font-size:18px">⚔️ NormArena</h2>
-  <div class="card" style="text-align:center;margin-bottom:16px">
-    <div style="font-size:48px;margin-bottom:8px">${won ? '🏆' : '💀'}</div>
-    <div style="font-size:22px;font-weight:900;color:${color};font-family:'Cinzel Decorative',serif">
+  <div class="card" style="text-align:center;margin-bottom:14px;border-color:${color}33">
+    <div style="font-size:52px;margin-bottom:8px">${won ? '🏆' : '💀'}</div>
+    <div style="font-size:26px;font-weight:900;color:${color};font-family:'Cinzel Decorative',serif;letter-spacing:2px">
       ${won ? 'VICTORY!' : 'DEFEAT'}
     </div>
-    <div style="font-size:13px;color:#6070a0;margin-top:6px">
-      ${won ? `${battle.opponentName} was defeated.` : `${battle.playerName} was defeated.`}
+    <div style="font-size:12px;color:#6070a0;margin-top:6px">
+      ${won ? `${battle.opponentName} was defeated!` : `You were defeated by ${battle.opponentName}.`}
     </div>
   </div>
-  <div class="card" style="margin-bottom:16px;max-height:160px;overflow-y:auto;padding:8px 10px">${lastLogs}</div>
-  <button class="btn green" style="font-size:14px;padding:10px 24px" onclick="window._arenaReset()">Play Again</button>`;
+  ${rewardHTML}
+  <div class="card" style="margin-bottom:14px;padding:8px 12px;max-height:130px;overflow-y:auto">
+    <div style="font-size:10px;font-weight:700;color:#3a3a5a;letter-spacing:1px;margin-bottom:4px">BATTLE LOG</div>
+    ${lastLogs}
+  </div>
+  <button class="btn green" style="font-size:14px;padding:10px 24px;width:100%" onclick="window._arenaReset()">Play Again</button>`;
 
-  window._arenaReset = handlers.reset;
+  window._arenaReset        = handlers.reset;
+  window._arenaClaimReward  = handlers.claimReward;
 }
 
 function renderOnlineLobby(root, gs, arenaState, handlers) {
   const pending = arenaState.pendingChallenges || [];
   const pendingHTML = pending.length
-    ? pending.map(c => `<div class="trade-card" style="margin-bottom:6px">
+    ? pending.map(c => `
+      <div class="trade-card" style="margin-bottom:6px">
         <div class="trade-meta">
           <div style="font-weight:700;color:#00e5ff">Challenge from ${escHtml(c.challenger_name)}</div>
           <div style="font-size:11px;color:#6070a0">Team: ${c.team_preview || '???'}</div>

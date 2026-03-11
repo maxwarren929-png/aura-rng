@@ -149,6 +149,10 @@ class ApiClient {
     return this._req('POST', '/game/save', { state });
   }
 
+  async battleWin(stolenAuraId) {
+    return this._req('POST', '/game/battle-win', { stolenAuraId });
+  }
+
   // Battle (NormArena)
   async getBattleChallenges() {
     return this._req('GET', '/battle/challenges');

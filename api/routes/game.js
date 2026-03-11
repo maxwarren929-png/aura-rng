@@ -94,6 +94,23 @@ router.post('/equip', auth, async (req, res) => {
   } catch (e) { console.error(e); res.status(500).json({ error: 'Server error' }); }
 });
 
+// POST /api/game/battle-win  { stolenAuraId? } — claim battle rewards
+router.post('/battle-win', auth, async (req, res) => {
+  try {
+    const { stolenAuraId } = req.body;
+    const state = await loadState(req.player.id);
+    const COINS = 300;
+    state.coins = (state.coins || 0) + COINS;
+    state.totalCoinsEarned = (state.totalCoinsEarned || 0) + COINS;
+    if (stolenAuraId && typeof stolenAuraId === 'string') {
+      state.inventory = state.inventory || {};
+      state.inventory[stolenAuraId] = (state.inventory[stolenAuraId] || 0) + 1;
+    }
+    await saveState(req.player.id, state);
+    res.json({ ok: true, state, coinsEarned: COINS, stolenAuraId: stolenAuraId || null });
+  } catch (e) { console.error(e); res.status(500).json({ error: 'Server error' }); }
+});
+
 // POST /api/game/save  — sync client-only fields (merges, enchants)
 router.post('/save', auth, async (req, res) => {
   try {
